@@ -1,0 +1,70 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\workspace\\C#\\Week_2\\StudentManager(tach StudentService)\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6C5E0531-8CAC-4F6C-8381-98B5ECA75D2A}|StudentManager(tach StudentService).csproj|D:\\workspace\\C#\\Week_2\\StudentManager(tach StudentService)\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6C5E0531-8CAC-4F6C-8381-98B5ECA75D2A}|StudentManager(tach StudentService).csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6C5E0531-8CAC-4F6C-8381-98B5ECA75D2A}|StudentManager(tach StudentService).csproj|d:\\workspace\\c#\\week_2\\studentmanager(tach studentservice)\\service\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6C5E0531-8CAC-4F6C-8381-98B5ECA75D2A}|StudentManager(tach StudentService).csproj|solutionrelative:service\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6C5E0531-8CAC-4F6C-8381-98B5ECA75D2A}|StudentManager(tach StudentService).csproj|D:\\workspace\\C#\\Week_2\\StudentManager(tach StudentService)\\model\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6C5E0531-8CAC-4F6C-8381-98B5ECA75D2A}|StudentManager(tach StudentService).csproj|solutionrelative:model\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "StudentService.cs",
+              "DocumentMoniker": "D:\\workspace\\C#\\Week_2\\StudentManager(tach StudentService)\\Service\\StudentService.cs",
+              "RelativeDocumentMoniker": "Service\\StudentService.cs",
+              "ToolTip": "D:\\workspace\\C#\\Week_2\\StudentManager(tach StudentService)\\Service\\StudentService.cs",
+              "RelativeToolTip": "Service\\StudentService.cs",
+              "ViewState": "AgIAADAAAAAAAAAAAAAswEQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-16T04:27:02.674Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Student.cs",
+              "DocumentMoniker": "D:\\workspace\\C#\\Week_2\\StudentManager(tach StudentService)\\model\\Student.cs",
+              "RelativeDocumentMoniker": "model\\Student.cs",
+              "ToolTip": "D:\\workspace\\C#\\Week_2\\StudentManager(tach StudentService)\\model\\Student.cs",
+              "RelativeToolTip": "model\\Student.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAsAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-16T04:23:10.067Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\workspace\\C#\\Week_2\\StudentManager(tach StudentService)\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\workspace\\C#\\Week_2\\StudentManager(tach StudentService)\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAADwvy0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-16T04:22:28.747Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

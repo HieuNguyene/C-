@@ -1,0 +1,7 @@
+D:\workspace\C#\C-\Week_2\Week2_day3\obj\Debug\Week2_day3.csproj.AssemblyReference.cache
+D:\workspace\C#\C-\Week_2\Week2_day3\obj\Debug\Week2_day3.csproj.CoreCompileInputs.cache
+D:\workspace\C#\C-\Week_2\Week2_day3\bin\Debug\Week2_day3.exe.config
+D:\workspace\C#\C-\Week_2\Week2_day3\bin\Debug\Week2_day3.exe
+D:\workspace\C#\C-\Week_2\Week2_day3\bin\Debug\Week2_day3.pdb
+D:\workspace\C#\C-\Week_2\Week2_day3\obj\Debug\Week2_day3.exe
+D:\workspace\C#\C-\Week_2\Week2_day3\obj\Debug\Week2_day3.pdb

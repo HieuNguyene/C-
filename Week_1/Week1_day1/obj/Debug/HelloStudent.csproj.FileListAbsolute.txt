@@ -1,7 +1,0 @@
-D:\workspace\C#\HelloStudent\bin\Debug\HelloStudent.exe.config
-D:\workspace\C#\HelloStudent\bin\Debug\HelloStudent.exe
-D:\workspace\C#\HelloStudent\bin\Debug\HelloStudent.pdb
-D:\workspace\C#\HelloStudent\obj\Debug\HelloStudent.csproj.AssemblyReference.cache
-D:\workspace\C#\HelloStudent\obj\Debug\HelloStudent.csproj.CoreCompileInputs.cache
-D:\workspace\C#\HelloStudent\obj\Debug\HelloStudent.exe
-D:\workspace\C#\HelloStudent\obj\Debug\HelloStudent.pdb

@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\workspace\\C#\\CS\\W1\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{BC61F0A4-5184-963D-06F6-A2E264C99B4B}|Week1.csproj|d:\\workspace\\c#\\cs\\w1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BC61F0A4-5184-963D-06F6-A2E264C99B4B}|Week1.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BC61F0A4-5184-963D-06F6-A2E264C99B4B}|Week1.csproj|d:\\workspace\\c#\\cs\\w1\\d3-5\\service\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BC61F0A4-5184-963D-06F6-A2E264C99B4B}|Week1.csproj|solutionrelative:d3-5\\service\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "StudentService.cs",
+              "DocumentMoniker": "D:\\workspace\\C#\\CS\\W1\\D3-5\\service\\StudentService.cs",
+              "RelativeDocumentMoniker": "D3-5\\service\\StudentService.cs",
+              "ToolTip": "D:\\workspace\\C#\\CS\\W1\\D3-5\\service\\StudentService.cs",
+              "RelativeToolTip": "D3-5\\service\\StudentService.cs",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAowGEAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T14:21:43.501Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\workspace\\C#\\CS\\W1\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\workspace\\C#\\CS\\W1\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAAwFcAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T04:10:26.576Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

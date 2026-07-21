@@ -1,7 +1,0 @@
-D:\workspace\C#\Week_2\StudentManagement_Interface\bin\Debug\StudentManagement_Interface.exe.config
-D:\workspace\C#\Week_2\StudentManagement_Interface\bin\Debug\StudentManagement_Interface.exe
-D:\workspace\C#\Week_2\StudentManagement_Interface\bin\Debug\StudentManagement_Interface.pdb
-D:\workspace\C#\Week_2\StudentManagement_Interface\obj\Debug\StudentManagement_Interface.csproj.AssemblyReference.cache
-D:\workspace\C#\Week_2\StudentManagement_Interface\obj\Debug\StudentManagement_Interface.csproj.CoreCompileInputs.cache
-D:\workspace\C#\Week_2\StudentManagement_Interface\obj\Debug\StudentManagement_Interface.exe
-D:\workspace\C#\Week_2\StudentManagement_Interface\obj\Debug\StudentManagement_Interface.pdb

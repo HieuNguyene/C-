@@ -1,7 +1,0 @@
-D:\workspace\C#\Week_2\StudentManager(tach StudentService)\obj\Debug\StudentManager(tach StudentService).csproj.AssemblyReference.cache
-D:\workspace\C#\Week_2\StudentManager(tach StudentService)\obj\Debug\StudentManager(tach StudentService).csproj.CoreCompileInputs.cache
-D:\workspace\C#\Week_2\StudentManager(tach StudentService)\bin\Debug\StudentManager(tach StudentService).exe.config
-D:\workspace\C#\Week_2\StudentManager(tach StudentService)\bin\Debug\StudentManager(tach StudentService).exe
-D:\workspace\C#\Week_2\StudentManager(tach StudentService)\bin\Debug\StudentManager(tach StudentService).pdb
-D:\workspace\C#\Week_2\StudentManager(tach StudentService)\obj\Debug\StudentManager(tach StudentService).exe
-D:\workspace\C#\Week_2\StudentManager(tach StudentService)\obj\Debug\StudentManager(tach StudentService).pdb

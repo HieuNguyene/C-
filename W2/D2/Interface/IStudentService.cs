@@ -9,10 +9,10 @@ namespace Week2.D2.Interface
 {
     interface IStudentService
     {
-        public void CreateStudent();
-        public void PrintStudent();
-        public Student? SearchStudentById();
-        public void UpdateStudentById();
-        public void DeleteStudentById();
+        Task CreateStudentAsync();
+        Task PrintStudentAsync();
+        Task <Student?> SearchStudentByIdAsync();
+        Task UpdateStudentByIdAsync();
+        Task DeleteStudentByIdAsync();
     }
 }

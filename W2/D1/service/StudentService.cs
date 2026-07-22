@@ -11,7 +11,7 @@ namespace Week2.D1.service
     {
         List<Student> students = new List<Student>();
         // Tao danh sach sinh vien
-        public void CreateStudent()
+        public async Task CreateStudentAsync()
         {
             int quantity;
             while (true)
@@ -29,18 +29,20 @@ namespace Week2.D1.service
                 s.InPutStudent();
                 students.Add(s);
             }
+            await Task.Delay(2000);
             Console.WriteLine("Updated list student!");
         }
         // In danh sach sinh vien
-        public void PrintStudent()
+        public async Task PrintStudentAsync()
         {
             foreach (var s in students)
             {
-                s.ToString();
+                await Task.Delay(500);
+                Console.WriteLine(s.ToString());
             }
         }
         //Tim sinh vien bang ID
-        public Student? SearchStudentById()
+        public async Task<Student?> SearchStudentByIdAsync()
         {
             string? id="";
             while (string.IsNullOrWhiteSpace(id))
@@ -55,58 +57,65 @@ namespace Week2.D1.service
             foreach (var s in students)
             {
                 if (s.Id == id)
+                {
+                    await Task.Delay(2000);
+                    Console.WriteLine($"Current: {s.ToString()}");
                     return s;
+                }
+                    
             }
             Console.WriteLine($"Not found student match {id}");
             return null;
         }
         // Cap nhat danh sach sinh vien bang id
-        public void UpdateStudentById()
+        public async Task UpdateStudentByIdAsync()
         {
-            Student? student = SearchStudentById();
+            Student? student =await SearchStudentByIdAsync();
             if (student != null)
             {
                 Console.WriteLine("Please update information: ");
-                Console.WriteLine($"Current: {student.ToString()}");
                 student.InPutStudent();
+                await Task.Delay(2000);
                 Console.WriteLine("Updated!");
             }
-            else
-            {
-                Console.WriteLine("Not found student!");
-            }
+            
         }
         // Xoa sinh vien bang id
-        public void DeleteStudentById()
+        public async Task DeleteStudentByIdAsync()
         {
-            Student? student = SearchStudentById();
+            Student? student = await SearchStudentByIdAsync();
             if (student != null)
             {
-                Console.WriteLine($"Current: {student.ToString()}");
+
                 char answer;
                 while (true)
                 {
                     Console.WriteLine("Do you want delete this student(Y/N) ?");
-                    if (char.TryParse(Console.ReadLine(), out answer))
+                    if (!char.TryParse(Console.ReadLine(), out answer))
                     {
                         Console.WriteLine("Please input Y or N");
+                        continue;
                     }
-                    else break;
+                    answer = char.ToUpper(answer);
+                    if (answer =='Y' || answer == 'N')
+                    {
+                        break;
+                    }
+                    Console.WriteLine("Please input Y or N");
                 }
-                if (answer.ToString().ToUpper() == "Y")
+                
+                if (answer == 'Y')
                 {
                     students.Remove(student);
+                    await Task.Delay(2000);
                     Console.WriteLine("Deleted!");
                 }
-                else
+                else 
                 {
                     return;
-                }
+                }   
             }
-            else
-            {
-                Console.WriteLine("Not found student!");
-            }
+            
         }
     }
 }

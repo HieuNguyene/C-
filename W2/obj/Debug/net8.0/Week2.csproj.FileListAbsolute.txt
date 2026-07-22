@@ -1,0 +1,15 @@
+D:\workspace\C#\CS\W2\bin\Debug\net8.0\Week2.exe
+D:\workspace\C#\CS\W2\bin\Debug\net8.0\Week2.deps.json
+D:\workspace\C#\CS\W2\bin\Debug\net8.0\Week2.runtimeconfig.json
+D:\workspace\C#\CS\W2\bin\Debug\net8.0\Week2.dll
+D:\workspace\C#\CS\W2\bin\Debug\net8.0\Week2.pdb
+D:\workspace\C#\CS\W2\obj\Debug\net8.0\Week2.GeneratedMSBuildEditorConfig.editorconfig
+D:\workspace\C#\CS\W2\obj\Debug\net8.0\Week2.AssemblyInfoInputs.cache
+D:\workspace\C#\CS\W2\obj\Debug\net8.0\Week2.AssemblyInfo.cs
+D:\workspace\C#\CS\W2\obj\Debug\net8.0\Week2.csproj.CoreCompileInputs.cache
+D:\workspace\C#\CS\W2\obj\Debug\net8.0\Week2.sourcelink.json
+D:\workspace\C#\CS\W2\obj\Debug\net8.0\Week2.dll
+D:\workspace\C#\CS\W2\obj\Debug\net8.0\refint\Week2.dll
+D:\workspace\C#\CS\W2\obj\Debug\net8.0\Week2.pdb
+D:\workspace\C#\CS\W2\obj\Debug\net8.0\Week2.genruntimeconfig.cache
+D:\workspace\C#\CS\W2\obj\Debug\net8.0\ref\Week2.dll

@@ -1,0 +1,15 @@
+D:\workspace\C#\CS\W1\obj\Debug\net8.0\Week1.GeneratedMSBuildEditorConfig.editorconfig
+D:\workspace\C#\CS\W1\obj\Debug\net8.0\Week1.AssemblyInfoInputs.cache
+D:\workspace\C#\CS\W1\obj\Debug\net8.0\Week1.AssemblyInfo.cs
+D:\workspace\C#\CS\W1\obj\Debug\net8.0\Week1.csproj.CoreCompileInputs.cache
+D:\workspace\C#\CS\W1\obj\Debug\net8.0\Week1.sourcelink.json
+D:\workspace\C#\CS\W1\bin\Debug\net8.0\Week1.exe
+D:\workspace\C#\CS\W1\bin\Debug\net8.0\Week1.deps.json
+D:\workspace\C#\CS\W1\bin\Debug\net8.0\Week1.runtimeconfig.json
+D:\workspace\C#\CS\W1\bin\Debug\net8.0\Week1.dll
+D:\workspace\C#\CS\W1\bin\Debug\net8.0\Week1.pdb
+D:\workspace\C#\CS\W1\obj\Debug\net8.0\Week1.dll
+D:\workspace\C#\CS\W1\obj\Debug\net8.0\refint\Week1.dll
+D:\workspace\C#\CS\W1\obj\Debug\net8.0\Week1.pdb
+D:\workspace\C#\CS\W1\obj\Debug\net8.0\Week1.genruntimeconfig.cache
+D:\workspace\C#\CS\W1\obj\Debug\net8.0\ref\Week1.dll

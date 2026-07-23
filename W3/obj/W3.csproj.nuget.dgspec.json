@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\workspace\\C#\\W3\\W3.csproj": {}
+    "D:\\workspace\\C#\\CS\\W3\\W3.csproj": {}
   },
   "projects": {
-    "D:\\workspace\\C#\\W3\\W3.csproj": {
+    "D:\\workspace\\C#\\CS\\W3\\W3.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\workspace\\C#\\W3\\W3.csproj",
+        "projectUniqueName": "D:\\workspace\\C#\\CS\\W3\\W3.csproj",
         "projectName": "W3",
-        "projectPath": "D:\\workspace\\C#\\W3\\W3.csproj",
+        "projectPath": "D:\\workspace\\C#\\CS\\W3\\W3.csproj",
         "packagesPath": "C:\\Users\\Tho\\.nuget\\packages\\",
-        "outputPath": "D:\\workspace\\C#\\W3\\obj\\",
+        "outputPath": "D:\\workspace\\C#\\CS\\W3\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

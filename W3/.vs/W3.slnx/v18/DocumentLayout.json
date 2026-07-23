@@ -1,22 +1,38 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\workspace\\C#\\W3\\",
+  "WorkspaceRootPath": "D:\\workspace\\C#\\CS\\W3\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{609723E6-CE20-4AAE-90C9-C3608026BCA5}|W3.csproj|d:\\workspace\\c#\\w3\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{609723E6-CE20-4AAE-90C9-C3608026BCA5}|W3.csproj|solutionrelative:controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B6943899-44C8-1D57-77D3-499F14EE6BE0}|W3.csproj|d:\\workspace\\c#\\cs\\w3\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B6943899-44C8-1D57-77D3-499F14EE6BE0}|W3.csproj|solutionrelative:controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{609723E6-CE20-4AAE-90C9-C3608026BCA5}|W3.csproj|d:\\workspace\\c#\\w3\\model\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{609723E6-CE20-4AAE-90C9-C3608026BCA5}|W3.csproj|solutionrelative:model\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B6943899-44C8-1D57-77D3-499F14EE6BE0}|W3.csproj|d:\\workspace\\c#\\cs\\w3\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B6943899-44C8-1D57-77D3-499F14EE6BE0}|W3.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{609723E6-CE20-4AAE-90C9-C3608026BCA5}|W3.csproj|d:\\workspace\\c#\\w3\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{609723E6-CE20-4AAE-90C9-C3608026BCA5}|W3.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B6943899-44C8-1D57-77D3-499F14EE6BE0}|W3.csproj|d:\\workspace\\c#\\cs\\w3\\service\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B6943899-44C8-1D57-77D3-499F14EE6BE0}|W3.csproj|solutionrelative:service\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{609723E6-CE20-4AAE-90C9-C3608026BCA5}|W3.csproj|d:\\workspace\\c#\\w3\\w3.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
-      "RelativeMoniker": "D:0:0:{609723E6-CE20-4AAE-90C9-C3608026BCA5}|W3.csproj|solutionrelative:w3.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+      "AbsoluteMoniker": "D:0:0:{B6943899-44C8-1D57-77D3-499F14EE6BE0}|W3.csproj|d:\\workspace\\c#\\cs\\w3\\interface\\istudentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B6943899-44C8-1D57-77D3-499F14EE6BE0}|W3.csproj|solutionrelative:interface\\istudentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B6943899-44C8-1D57-77D3-499F14EE6BE0}|W3.csproj|d:\\workspace\\c#\\cs\\w3\\model\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B6943899-44C8-1D57-77D3-499F14EE6BE0}|W3.csproj|solutionrelative:model\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B6943899-44C8-1D57-77D3-499F14EE6BE0}|W3.csproj|d:\\workspace\\c#\\cs\\w3\\dtos\\respones\\studentrespone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B6943899-44C8-1D57-77D3-499F14EE6BE0}|W3.csproj|solutionrelative:dtos\\respones\\studentrespone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B6943899-44C8-1D57-77D3-499F14EE6BE0}|W3.csproj|d:\\workspace\\c#\\cs\\w3\\dtos\\request\\createstudentrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B6943899-44C8-1D57-77D3-499F14EE6BE0}|W3.csproj|solutionrelative:dtos\\request\\createstudentrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B6943899-44C8-1D57-77D3-499F14EE6BE0}|W3.csproj|d:\\workspace\\c#\\cs\\w3\\dtos\\request\\updatestudentrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B6943899-44C8-1D57-77D3-499F14EE6BE0}|W3.csproj|solutionrelative:dtos\\request\\updatestudentrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,28 +42,93 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\workspace\\C#\\CS\\W3\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\workspace\\C#\\CS\\W3\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAxwAIAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-23T02:17:16.563Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "StudentService.cs",
+              "DocumentMoniker": "D:\\workspace\\C#\\CS\\W3\\Service\\StudentService.cs",
+              "RelativeDocumentMoniker": "Service\\StudentService.cs",
+              "ToolTip": "D:\\workspace\\C#\\CS\\W3\\Service\\StudentService.cs",
+              "RelativeToolTip": "Service\\StudentService.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAkwEMAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-23T02:09:57.028Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IStudentService.cs",
+              "DocumentMoniker": "D:\\workspace\\C#\\CS\\W3\\Interface\\IStudentService.cs",
+              "RelativeDocumentMoniker": "Interface\\IStudentService.cs",
+              "ToolTip": "D:\\workspace\\C#\\CS\\W3\\Interface\\IStudentService.cs",
+              "RelativeToolTip": "Interface\\IStudentService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAsAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-23T02:08:59.005Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CreateStudentRequest.cs",
+              "DocumentMoniker": "D:\\workspace\\C#\\CS\\W3\\DTOs\\Request\\CreateStudentRequest.cs",
+              "RelativeDocumentMoniker": "DTOs\\Request\\CreateStudentRequest.cs",
+              "ToolTip": "D:\\workspace\\C#\\CS\\W3\\DTOs\\Request\\CreateStudentRequest.cs",
+              "RelativeToolTip": "DTOs\\Request\\CreateStudentRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-23T01:41:58.06Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "StudentController.cs",
-              "DocumentMoniker": "D:\\workspace\\C#\\W3\\Controllers\\StudentController.cs",
+              "DocumentMoniker": "D:\\workspace\\C#\\CS\\W3\\Controllers\\StudentController.cs",
               "RelativeDocumentMoniker": "Controllers\\StudentController.cs",
-              "ToolTip": "D:\\workspace\\C#\\W3\\Controllers\\StudentController.cs",
+              "ToolTip": "D:\\workspace\\C#\\CS\\W3\\Controllers\\StudentController.cs",
               "RelativeToolTip": "Controllers\\StudentController.cs",
-              "ViewState": "AgIAAEMAAAAAAAAAAAAswFEAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAowE0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-22T17:13:06.395Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
+              "Title": "StudentRespone.cs",
+              "DocumentMoniker": "D:\\workspace\\C#\\CS\\W3\\DTOs\\Respones\\StudentRespone.cs",
+              "RelativeDocumentMoniker": "DTOs\\Respones\\StudentRespone.cs",
+              "ToolTip": "D:\\workspace\\C#\\CS\\W3\\DTOs\\Respones\\StudentRespone.cs",
+              "RelativeToolTip": "DTOs\\Respones\\StudentRespone.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-23T01:47:02.144Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Student.cs",
-              "DocumentMoniker": "D:\\workspace\\C#\\W3\\model\\Student.cs",
+              "DocumentMoniker": "D:\\workspace\\C#\\CS\\W3\\model\\Student.cs",
               "RelativeDocumentMoniker": "model\\Student.cs",
-              "ToolTip": "D:\\workspace\\C#\\W3\\model\\Student.cs",
+              "ToolTip": "D:\\workspace\\C#\\CS\\W3\\model\\Student.cs",
               "RelativeToolTip": "model\\Student.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -56,28 +137,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "W3.http",
-              "DocumentMoniker": "D:\\workspace\\C#\\W3\\W3.http",
-              "RelativeDocumentMoniker": "W3.http",
-              "ToolTip": "D:\\workspace\\C#\\W3\\W3.http",
-              "RelativeToolTip": "W3.http",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2026-07-22T16:44:12.529Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\workspace\\C#\\W3\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "D:\\workspace\\C#\\W3\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "UpdateStudentRequest.cs",
+              "DocumentMoniker": "D:\\workspace\\C#\\CS\\W3\\DTOs\\Request\\UpdateStudentRequest.cs",
+              "RelativeDocumentMoniker": "DTOs\\Request\\UpdateStudentRequest.cs",
+              "ToolTip": "D:\\workspace\\C#\\CS\\W3\\DTOs\\Request\\UpdateStudentRequest.cs",
+              "RelativeToolTip": "DTOs\\Request\\UpdateStudentRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-22T16:43:22.51Z",
+              "WhenOpened": "2026-07-23T01:45:17.276Z",
               "EditorCaption": ""
             }
           ]

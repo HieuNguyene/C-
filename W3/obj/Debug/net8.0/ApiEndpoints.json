@@ -2,7 +2,7 @@
   {
     "ContainingType": "W3.Controllers.StudentController",
     "Method": "GetAll",
-    "RelativePath": "api/controller",
+    "RelativePath": "api/Student",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -12,14 +12,14 @@
   {
     "ContainingType": "W3.Controllers.StudentController",
     "Method": "Create",
-    "RelativePath": "api/controller",
+    "RelativePath": "api/Student",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "student",
-        "Type": "W3.model.Student",
+        "Name": "request",
+        "Type": "W3.DTOs.Request.CreateStudentRequest",
         "IsRequired": true
       }
     ],
@@ -27,8 +27,8 @@
   },
   {
     "ContainingType": "W3.Controllers.StudentController",
-    "Method": "Delete",
-    "RelativePath": "api/controller",
+    "Method": "DeleteById",
+    "RelativePath": "api/Student",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -44,7 +44,7 @@
   {
     "ContainingType": "W3.Controllers.StudentController",
     "Method": "GetById",
-    "RelativePath": "api/controller/{id}",
+    "RelativePath": "api/Student/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -60,7 +60,7 @@
   {
     "ContainingType": "W3.Controllers.StudentController",
     "Method": "Update",
-    "RelativePath": "api/controller/{id}",
+    "RelativePath": "api/Student/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -71,32 +71,11 @@
         "IsRequired": true
       },
       {
-        "Name": "studentEdit",
-        "Type": "W3.model.Student",
+        "Name": "request",
+        "Type": "W3.DTOs.Request.UpdateStudentRequest",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
-  },
-  {
-    "ContainingType": "W3.Controllers.WeatherForecastController",
-    "Method": "Get",
-    "RelativePath": "WeatherForecast",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[W3.WeatherForecast, W3, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ],
-    "EndpointName": "GetWeatherForecast"
   }
 ]

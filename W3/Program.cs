@@ -1,4 +1,6 @@
 
+using W3.Interface;
+using W3.Service;
 namespace W3
 {
     public class Program
@@ -13,7 +15,7 @@ namespace W3
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddScoped<IStudentService, StudentService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

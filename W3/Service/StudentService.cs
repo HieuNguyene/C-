@@ -3,69 +3,128 @@ using W3.DTOs.Request;
 using W3.DTOs.Respones;
 using W3.Interface;
 using W3.model;
+using W3.Responses;
 
 namespace W3.Service
 {
     public class StudentService:IStudentService
     {
         private static List<Student> students = new List<Student>();          
-        public List<StudentRespone> GetAll()
+        public ApiResponse<List<StudentResponse>> GetAll(StudentQueryRequest request)
         {
-            return students.Select(s => new StudentRespone
+            var querry = students.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(request.Keyword)) 
             {
-                Id = s.Id,
-                Name = s.Name
-            }).ToList();
+                querry = querry
+                .Where(s => s.Name.Contains(request.Keyword, StringComparison.OrdinalIgnoreCase));
+            }
+            var data = querry
+                .Skip((request.Page - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .Select(s => new StudentResponse
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                }).ToList();
+            return  new ApiResponse<List<StudentResponse>>()
+            {
+                Success = true,
+                Message = data.Any()?"Success":"No student found",
+                Data = data 
+            };
+            
         }
-        public StudentRespone Create(CreateStudentRequest request)
+        public ApiResponse<StudentResponse> Create(CreateStudentRequest request)
         {
+            if (string.IsNullOrWhiteSpace(request.Name))
+            {
+                return new ApiResponse<StudentResponse>()
+                {
+                    Success = false,
+                    Message = "Name is not empty or null",
+                };
+            }
             Student student = new Student()
             {
                 Id = Guid.NewGuid(),
                 Name = request.Name
             };
             students.Add(student);
-            return new StudentRespone{
-                Id = student.Id,
-                Name = request.Name
+            return new ApiResponse<StudentResponse>(){
+                Success = true,
+                Message ="Success",
+                Data = new StudentResponse() {
+                    Id = student.Id,
+                    Name = request.Name
+                }
             };
         }
-        public StudentRespone? GetById(string id)
+        public ApiResponse<StudentResponse> GetById(Guid id)
         {
-            Student? student = students.SingleOrDefault(s => s.Id == Guid.Parse(id));
-            
+            Student? student = students.SingleOrDefault(s => s.Id == id);
             if(student == null)
             {
-                return null;
+                return new ApiResponse<StudentResponse>
+                {
+                    Success = false,
+                    Message = "fail",
+                    Data = null
+                };
             }
-            return new StudentRespone
+            return new ApiResponse<StudentResponse>
             {
-                Id = student.Id,
-                Name = student.Name
+                Success = true,
+                Message = "Success",
+                Data = new StudentResponse{
+                    Id = student.Id,
+                    Name = student.Name
+                }
             };
         }
-        public StudentRespone? UpdateById(string id,UpdateStudentRequest request)
+        public ApiResponse<bool> UpdateById(Guid id,UpdateStudentRequest request)
         {
-            Student? student = students.SingleOrDefault(s => s.Id == Guid.Parse(id));
-            if (student == null) 
+            if (string.IsNullOrWhiteSpace(request.Name))
             {
-                return null;
+                return new ApiResponse<bool>()
+                {
+                    Success = false,
+                    Message = "Name is not empty or null",
+                    Data = false
+                };
+            }
+            Student? student = students.SingleOrDefault(s => s.Id == id);
+            if (student == null)
+            {
+                return new ApiResponse<bool>()
+                {
+                    Success = false,
+                    Message = "Fail",
+                };
             }
             student.Name = request.Name;
-            return new StudentRespone
+            return new ApiResponse<bool>()
             {
-                Id = student.Id,
-                Name = request.Name
+                Success=true,
+                Message ="Success",
             };
         }
-        public bool DeleteById(string id) 
+        public ApiResponse<bool> DeleteById(Guid id) 
         {
-            Student? student = students.SingleOrDefault(s => s.Id == Guid.Parse(id));
+            Student? student = students.SingleOrDefault(s => s.Id == id);
             if (student == null) 
             {
-                return false;
+                return new ApiResponse<bool>()
+                {
+                    Success = false,
+                    Message = "Fail",
+                };
             }
-            return students.Remove(student);
+            students.Remove(student);
+            return new ApiResponse<bool>()
+            {
+                Success = true,
+                Message = "Fail",
+            };
         }
     }
 }

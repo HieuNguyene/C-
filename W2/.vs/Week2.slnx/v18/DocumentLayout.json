@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\workspace\\C#\\CS\\W2\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D182E64F-0C0B-E197-54C1-9CA030FC4590}|Week2.csproj|d:\\workspace\\c#\\cs\\w2\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{D182E64F-0C0B-E197-54C1-9CA030FC4590}|Week2.csproj|solutionrelative:readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D182E64F-0C0B-E197-54C1-9CA030FC4590}|Week2.csproj|d:\\workspace\\c#\\cs\\w2\\d1\\service\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D182E64F-0C0B-E197-54C1-9CA030FC4590}|Week2.csproj|solutionrelative:d1\\service\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -26,11 +30,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
+              "Title": "README.md",
+              "DocumentMoniker": "D:\\workspace\\C#\\CS\\W2\\README.md",
+              "RelativeDocumentMoniker": "README.md",
+              "ToolTip": "D:\\workspace\\C#\\CS\\W2\\README.md",
+              "RelativeToolTip": "README.md",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAiwJMAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-07-22T16:46:56.73Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\workspace\\C#\\CS\\W2\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -38,12 +55,11 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAACAAAAAAAAAAAAAAwC8AAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-22T03:52:09.638Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-22T03:52:09.638Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Student.cs",
               "DocumentMoniker": "D:\\workspace\\C#\\CS\\W2\\D1\\model\\Student.cs",
               "RelativeDocumentMoniker": "D1\\model\\Student.cs",
@@ -51,12 +67,11 @@
               "RelativeToolTip": "D1\\model\\Student.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAzwAYAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-21T17:18:39.678Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-21T17:18:39.678Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "StudentService.cs",
               "DocumentMoniker": "D:\\workspace\\C#\\CS\\W2\\D1\\service\\StudentService.cs",
               "RelativeDocumentMoniker": "D1\\service\\StudentService.cs",
@@ -69,7 +84,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "IStudentService.cs",
               "DocumentMoniker": "D:\\workspace\\C#\\CS\\W2\\D2\\Interface\\IStudentService.cs",
               "RelativeDocumentMoniker": "D2\\Interface\\IStudentService.cs",
@@ -77,8 +92,7 @@
               "RelativeToolTip": "D2\\Interface\\IStudentService.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAA4AAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-21T17:02:52.725Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-21T17:02:52.725Z"
             }
           ]
         }

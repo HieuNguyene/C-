@@ -15,63 +15,76 @@ namespace W3.Controllers
             _service = service;
         }
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll([FromQuery] StudentQueryRequest request)
         {
-            var students = _service.GetAll();
+            var students = _service.GetAll(request);
             return Ok(students);
         }
         [HttpPost]
         public IActionResult Create(CreateStudentRequest request)
         {
-            var student = _service.Create(request);
-            return Created("", student);
-        }
-        [HttpGet("{id}")]
-        public IActionResult GetById(string id)
-        {
             try
             {
-                var student= _service.GetById(id);
-                return Ok(student);
+                var student = _service.Create(request);
+                return Created("", student);
             }
             catch
             {
                 return BadRequest();
             }
         }
+        [HttpGet("{id}")]
+        public IActionResult GetById(Guid id)
+        {
+            try
+            {
+                var respone = _service.GetById(id);
+                if (!respone.Success)
+                {
+                    return NotFound();
+                }
+                return Ok(respone);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+        }
         [HttpPut("{id}")]
-        public IActionResult Update(string id, UpdateStudentRequest request)
+        public IActionResult Update(Guid id, UpdateStudentRequest request)
         {
             try
             {
                 var student = _service.UpdateById(id, request);
-                if (student != null) 
+                if (student.Success == false)
                 {
-                    return NotFound();
+                    return NotFound(student);
                 }
-                return Ok(student);
+                return NoContent();
             }
             catch
             {
                 return BadRequest();
             }
         }
-        [HttpDelete]
-        public IActionResult DeleteById(string id)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteById(Guid id)
         {
             try
             {
                 var result = _service.DeleteById(id);
-                if (!result)
+                if (result.Success == false)
                 {
-                    return NotFound();
+                    return NotFound(result);
                 }
-                return Ok();
+                return NoContent();
             }
             catch
             {
                 return BadRequest();
             }
+            
         }
     }
 }

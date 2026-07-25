@@ -1,14 +1,18 @@
 ﻿using W3.DTOs.Request;
 using W3.DTOs.Respones;
-
+using W3.Responses;
 namespace W3.Interface
 {
     public interface IStudentService
     {
-        List<StudentRespone> GetAll();
-        StudentRespone Create (CreateStudentRequest request);
-        StudentRespone? GetById(string id);
-        StudentRespone? UpdateById(string id,UpdateStudentRequest request);
-        bool DeleteById(string id);
+        ApiResponse<List<StudentResponse>> GetAll(StudentQueryRequest request);
+
+        ApiResponse<StudentResponse> GetById(Guid id);
+
+        ApiResponse<StudentResponse> Create(CreateStudentRequest request);
+
+        ApiResponse<bool> UpdateById(Guid id, UpdateStudentRequest request);
+
+        ApiResponse<bool> DeleteById(Guid id);
     }
 }

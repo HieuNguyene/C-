@@ -62,27 +62,21 @@ namespace W3.Service
         public ApiResponse<StudentResponse> GetById(Guid id)
         {
             Student? student = students.SingleOrDefault(s => s.Id == id);
+
             if (student == null)
             {
-                return new ApiResponse<StudentResponse>
-                {
-                    Success = false,
-                    Message = "fail",
-                    Data = null
-                };
+                throw new KeyNotFoundException("Student not found");
             }
-            return new ApiResponse<StudentResponse>
+            return new ApiResponse<StudentResponse>()
             {
                 Success = true,
                 Message = "Success",
-                Data = new StudentResponse
+                Data = new StudentResponse()
                 {
                     Id = student.Id,
                     Name = student.Name
                 }
-            };
-            
-            
+            };    
         }
         public ApiResponse<bool> UpdateById(Guid id,UpdateStudentRequest request)
         {

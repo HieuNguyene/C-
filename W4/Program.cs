@@ -1,7 +1,10 @@
 
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using W3.Interface;
 using W3.Service;
 using W4.middleware;
+using W4.FluentValidation;
 namespace W3
 {
     public class Program
@@ -17,15 +20,17 @@ namespace W3
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IStudentService, StudentService>();
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateStudentValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<UpdateStudentValidator>();
+            builder.Services.AddFluentValidationAutoValidation();
             var app = builder.Build();
-
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            app.UseMiddleware<CustomeMiddleware>();
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseHttpsRedirection();
 
             app.UseAuthorization();

@@ -23,33 +23,16 @@ namespace W3.Controllers
         [HttpPost]
         public IActionResult Create(CreateStudentRequest request)
         {
-            try
-            {
-                var student = _service.Create(request);
-                return Created("", student);
-            }
-            catch
-            {
-                return BadRequest();
-            }
+            
+            var student = _service.Create(request);
+            return Ok(student);
         }
         [HttpGet("{id}")]
         public IActionResult GetById(Guid id)
         {
-            try
-            {
-                var respone = _service.GetById(id);
-                if (!respone.Success)
-                {
-                    return NotFound();
-                }
-                return Ok(respone);
-            }
-            catch
-            {
-                return BadRequest();
-            }
-            throw new Exception("Demo Exception");
+            var result = _service.GetById(id);
+            return Ok(result);
+                
         }
         [HttpPut("{id}")]
         public IActionResult Update(Guid id, UpdateStudentRequest request)

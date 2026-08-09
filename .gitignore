@@ -1,16 +1,62 @@
+# ==============================================================================
+# BỎ QUA CÁC THƯ MỤC BUILD VÀ PUBLISH
+# ==============================================================================
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Pp]ublish/
+PublishOutput/
+TestResults/
+
+# ==============================================================================
+# BỎ QUA CÁC FILE CẤU HÌNH CỤC BỘ / MẬT KHẨU (BẢO MẬT)
+# ==============================================================================
+# Không đẩy cấu hình Development hoặc Local lên Git để tránh lộ chuỗi kết nối DB
+appsettings.Development.json
+appsettings.local.json
+secrets.json
+
+# ==============================================================================
+# BỎ QUA CÁC FILE/THƯ MỤC CỦA CÁC IDE (MÔI TRƯỜNG LẬP TRÌNH)
+# ==============================================================================
 # Visual Studio
 .vs/
-
-# Build
-bin/
-obj/
-
-# User files
 *.user
+*.userosscache
+*.sln.docstates
 *.suo
 
-# Rider
+# JetBrains Rider
 .idea/
+*.sln.iml
 
-# VS Code
-.vscode/
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# ==============================================================================
+# BỎ QUA CÁC FILE CỦA HỆ ĐIỀU HÀNH VÀ LOG
+# ==============================================================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Logs
+*.log
+
+# ==============================================================================
+# KHÁC
+# ==============================================================================
+*.sqlite
+*.db
+*.mdf
+*.ldf

@@ -22,7 +22,7 @@ CREATE TABLE Classes (
 GO
 
 
-CREATE TABLE StudentS (
+CREATE TABLE Students (
     Id INT IDENTITY(1,1) PRIMARY KEY,
     Name NVARCHAR(250) NOT NULL,
     Class_Id NVARCHAR(50) NULL, 
@@ -38,19 +38,19 @@ CREATE TABLE Subjects (
 GO
 
 
-CREATE TABLE Mark (
+CREATE TABLE Marks (
     Student_Id INT NOT NULL,
-    Subjects_Id NVARCHAR(50) NOT NULL,
-    Mark DECIMAL(4,2) NOT NULL CHECK (Mark BETWEEN 0 AND 10), 
+    Subject_Id NVARCHAR(50) NOT NULL,
+    Score DECIMAL(4,2) NOT NULL CHECK (Score BETWEEN 0 AND 10), 
     ExamDate DATE NOT NULL DEFAULT GETDATE(), 
 
     CONSTRAINT FK_Marks_Students FOREIGN KEY (Student_Id)
-        REFERENCES StudentS(Id) ON DELETE CASCADE,
+        REFERENCES Students(Id) ON DELETE CASCADE,
         
-    CONSTRAINT FK_Marks_Subjects FOREIGN KEY (Subjects_Id)
+    CONSTRAINT FK_Marks_Subjects FOREIGN KEY (Subject_Id)
         REFERENCES Subjects(Id) ON DELETE CASCADE,
         
-    PRIMARY KEY (Student_Id, Subjects_Id)
+    PRIMARY KEY (Student_Id, Subject_Id)
 );
 GO
 
@@ -62,7 +62,7 @@ INSERT INTO Classes (Id, Name) VALUES
 ('C03', N'Lớp Kế toán K15');
 GO
 
-INSERT INTO StudentS (Name, Class_Id) VALUES 
+INSERT INTO Students (Name, Class_Id) VALUES 
 (N'Nguyễn Văn An', 'C01'),
 (N'Trần Thị Bình', 'C02'),
 (N'Lê Văn Cường', 'C01'),
@@ -76,7 +76,7 @@ INSERT INTO Subjects (Id, Name) VALUES
 ('SUB03', N'Toán cao cấp');
 GO
 
-INSERT INTO Mark (Student_Id, Subjects_Id, Mark, ExamDate) VALUES 
+INSERT INTO Marks (Student_Id, Subject_Id, Score, ExamDate) VALUES 
 (1, 'SUB01', 8.50, '2026-08-10'),
 (1, 'SUB02', 10.00, '2026-08-11'),
 (2, 'SUB01', 4.50, '2026-08-10'),
@@ -88,15 +88,15 @@ INSERT INTO Mark (Student_Id, Subjects_Id, Mark, ExamDate) VALUES
 GO
 
 
-SELECT * FROM StudentS
+SELECT * FROM Students
 WHERE Name LIKE N'Nguyễn%' OR Name LIKE N'%Hải%';
 
 
-SELECT * FROM Mark
-WHERE Mark BETWEEN 5.0 AND 9.0;
+SELECT * FROM Marks
+WHERE Score BETWEEN 5.0 AND 9.0;
 
 
-SELECT * FROM StudentS
+SELECT * FROM Students
 WHERE Class_Id IS NULL;
 
 SELECT * FROM Subjects
@@ -108,19 +108,19 @@ SELECT
     s.Id AS StudentId,
     s.Name AS StudentName,
     c.Name AS ClassName
-FROM StudentS s
+FROM Students s
 LEFT JOIN Classes c ON s.Class_Id = c.Id;
 GO
 
 SELECT 
     s.Name AS StudentName,
     sub.Name AS SubjectName,
-    m.Mark AS Score,
+    m.Score AS Score,
     m.ExamDate
-FROM Mark m
-INNER JOIN StudentS s ON m.Student_Id = s.Id
-INNER JOIN Subjects sub ON m.Subjects_Id = sub.Id
-ORDER BY s.Name ASC, m.Mark DESC;
+FROM Marks m
+INNER JOIN Students s ON m.Student_Id = s.Id
+INNER JOIN Subjects sub ON m.Subject_Id = sub.Id
+ORDER BY s.Name ASC, m.Score DESC;
 GO
 
 SELECT 
@@ -128,19 +128,19 @@ SELECT
     c.Name AS ClassName,
     COUNT(s.Id) AS TotalStudents
 FROM Classes c
-LEFT JOIN StudentS s ON c.Id = s.Class_Id
+LEFT JOIN Students s ON c.Id = s.Class_Id
 GROUP BY c.Id, c.Name;
 GO
 
 SELECT 
     s.Id AS StudentId,
     s.Name AS StudentName,
-    AVG(m.Mark) AS AverageMark,
-    COUNT(m.Subjects_Id) AS ExaminedSubjects
-FROM StudentS s
-INNER JOIN Mark m ON s.Id = m.Student_Id
+    AVG(m.Score) AS AverageMark,
+    COUNT(m.Subject_Id) AS ExaminedSubjects
+FROM Students s
+INNER JOIN Marks m ON s.Id = m.Student_Id
 GROUP BY s.Id, s.Name
-HAVING AVG(m.Mark) >= 6.0;
+HAVING AVG(m.Score) >= 6.0;
 GO
 
 IF EXISTS (SELECT * FROM sys.views WHERE name = 'v_StudentReport')
@@ -152,17 +152,17 @@ SELECT
     s.Id AS StudentId,
     s.Name AS StudentName,
     c.Name AS ClassName,
-    COUNT(m.Subjects_Id) AS TotalSubjects,
-    AVG(m.Mark) AS GPA,
+    COUNT(m.Subject_Id) AS TotalSubjects,
+    AVG(m.Score) AS GPA,
     CASE 
-        WHEN AVG(m.Mark) >= 8.0 THEN N'Giỏi'
-        WHEN AVG(m.Mark) >= 6.5 THEN N'Khá'
-        WHEN AVG(m.Mark) >= 5.0 THEN N'Trung bình'
+        WHEN AVG(m.Score) >= 8.0 THEN N'Giỏi'
+        WHEN AVG(m.Score) >= 6.5 THEN N'Khá'
+        WHEN AVG(m.Score) >= 5.0 THEN N'Trung bình'
         ELSE N'Yếu'
     END AS Classification
-FROM StudentS s
+FROM Students s
 LEFT JOIN Classes c ON s.Class_Id = c.Id
-LEFT JOIN Mark m ON s.Id = m.Student_Id
+LEFT JOIN Marks m ON s.Id = m.Student_Id
 GROUP BY s.Id, s.Name, c.Name;
 GO
 

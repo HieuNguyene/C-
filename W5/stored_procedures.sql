@@ -17,7 +17,7 @@ BEGIN
         s.Id AS StudentId,
         s.Name AS StudentName,
         c.Name AS ClassName
-    FROM StudentS s
+    FROM Students s
     LEFT JOIN Classes c ON s.Class_Id = c.Id
     ORDER BY s.Id;
 END;
@@ -38,7 +38,7 @@ BEGIN
         s.Id AS StudentId,
         s.Name AS StudentName,
         s.Class_Id AS ClassId
-    FROM StudentS s
+    FROM Students s
     WHERE s.Class_Id = @ClassId;
 END;
 GO
@@ -58,7 +58,7 @@ BEGIN
 
    
     SELECT @TotalStudents = COUNT(*) 
-    FROM StudentS
+    FROM Students
     WHERE Class_Id = @ClassId;
 END;
 GO
@@ -76,7 +76,7 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    INSERT INTO StudentS (Name, Class_Id)
+    INSERT INTO Students (Name, Class_Id)
     VALUES (@Name, @ClassId);
 
     SET @NewStudentId = SCOPE_IDENTITY();
@@ -99,7 +99,7 @@ BEGIN
         s.Name AS StudentName,
         s.Class_Id AS ClassId,
         c.Name AS ClassName
-    FROM StudentS s
+    FROM Students s
     LEFT JOIN Classes c ON s.Class_Id = c.Id
     WHERE s.Id = @Id;
 END;
@@ -118,7 +118,7 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    UPDATE StudentS
+    UPDATE Students
     SET Name = @Name,
         Class_Id = @ClassId
     WHERE Id = @Id;
@@ -136,7 +136,7 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    DELETE FROM StudentS
+    DELETE FROM Students
     WHERE Id = @Id;
 END;
 GO
@@ -156,7 +156,7 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    SELECT @TotalRecords = COUNT(*) FROM StudentS;
+    SELECT @TotalRecords = COUNT(*) FROM Students;
 
     DECLARE @Offset INT;
     SET @Offset = (@PageIndex - 1) * @PageSize;
@@ -165,11 +165,10 @@ BEGIN
         s.Id AS StudentId,
         s.Name AS StudentName,
         c.Name AS ClassName
-    FROM StudentS s
+    FROM Students s
     LEFT JOIN Classes c ON s.Class_Id = c.Id
     ORDER BY s.Id ASC -- Luôn cần ORDER BY để phân trang chính xác
     OFFSET @Offset ROWS
     FETCH NEXT @PageSize ROWS ONLY;
 END;
 GO
-

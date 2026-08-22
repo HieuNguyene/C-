@@ -5,14 +5,14 @@ namespace W3.Interface
 {
     public interface IStudentService
     {
-        ApiResponse<List<StudentResponse>> GetAll(StudentQueryRequest request);
+        Task<ApiResponse<List<StudentResponse>>> GetByKeyWordAsync(StudentQueryRequest request);
 
-        ApiResponse<StudentResponse> GetById(Guid id);
+        Task<ApiResponse<StudentResponse>> GetByIdAsync(Guid id);
 
-        ApiResponse<StudentResponse> Create(CreateStudentRequest request);
+        Task<ApiResponse<StudentResponse>> CreateAsync(CreateStudentRequest request);
 
-        ApiResponse<bool> UpdateById(Guid id, UpdateStudentRequest request);
+        Task<ApiResponse<bool>> UpdateByIdAsync(Guid id,UpdateStudentRequest request);
 
-        ApiResponse<bool> DeleteById(Guid id);
+        Task<ApiResponse<bool>> DeleteByIdAsync(Guid id);
     }
 }

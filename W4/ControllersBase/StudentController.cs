@@ -3,71 +3,50 @@ using W3.DTOs.Respones;
 using W3.model;
 using W3.DTOs.Request;
 using W3.Interface;
+using W3.Responses;
 namespace W3.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/students")]
     [ApiController]
-    public class StudentController : Controller
+    public class StudentController : ControllerBase
     {
         private readonly IStudentService _service;
         public StudentController(IStudentService service)
         {
             _service = service;
         }
-        [HttpGet]
-        public IActionResult GetAll([FromQuery] StudentQueryRequest request)
+        [HttpGet("search")]
+        public async Task<IActionResult> GetByKeyWordAsync([FromQuery] StudentQueryRequest request)
         {
-            var students = _service.GetAll(request);
-            return Ok(students);
+            var response = await _service.GetByKeyWordAsync(request);
+            return Ok(response);
         }
         [HttpPost]
-        public IActionResult Create(CreateStudentRequest request)
+        public async Task<IActionResult> CreateAsync(CreateStudentRequest request)
         {
-            
-            var student = _service.Create(request);
+
+            var student = await _service.CreateAsync(request);
             return Ok(student);
         }
         [HttpGet("{id}")]
-        public IActionResult GetById(Guid id)
+        public async Task<IActionResult> GetByIdAsync(Guid id)
         {
-            var result = _service.GetById(id);
+            var result = await _service.GetByIdAsync(id);
             return Ok(result);
-                
+
         }
         [HttpPut("{id}")]
-        public IActionResult Update(Guid id, UpdateStudentRequest request)
+        public async Task<IActionResult> UpdateAsync(Guid id, UpdateStudentRequest request)
         {
-            try
-            {
-                var student = _service.UpdateById(id, request);
-                if (student.Success == false)
-                {
-                    return NotFound(student);
-                }
-                return NoContent();
-            }
-            catch
-            {
-                return BadRequest();
-            }
+            var result = await _service.UpdateByIdAsync(id, request);
+            return Ok(result);
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteById(Guid id)
+        public async Task<IActionResult> DeleteById(Guid id)
         {
-            try
-            {
-                var result = _service.DeleteById(id);
-                if (result.Success == false)
-                {
-                    return NotFound(result);
-                }
-                return NoContent();
-            }
-            catch
-            {
-                return BadRequest();
-            }
-            
+
+            var result = await _service.DeleteByIdAsync(id);
+            return Ok(result);
         }
     }
 }

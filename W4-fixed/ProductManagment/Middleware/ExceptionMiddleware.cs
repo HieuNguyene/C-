@@ -18,6 +18,7 @@ namespace ProductManagment.Middleware
         {
             try
             {
+                //rq người dùng
                 await _next(context);
             }
             catch (Exception e) {

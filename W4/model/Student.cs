@@ -33,6 +33,7 @@ namespace W3.model
         }
         public void TransferToClass(String newClassId)
         {
+            
             if (string.IsNullOrWhiteSpace(newClassId))
             {
                 throw new ArgumentNullException("Mã lớp không hợp lệ");

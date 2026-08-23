@@ -9,6 +9,7 @@ using W4.Interface;
 using W4.Repository;
 using W4.Data;
 using Microsoft.EntityFrameworkCore;
+using W4.Service;
 namespace W3
 {
     public class Program
@@ -23,8 +24,11 @@ namespace W3
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddScoped<IStudentRepository,StudentRepository>();
+            builder.Services.AddScoped<IClassRepository, ClassRepository>();
+            builder.Services.AddScoped<IClassService, ClassService>();
+            builder.Services.AddScoped<IStudentRepository, StudentRepository>();
             builder.Services.AddScoped<IStudentService, StudentService>();
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateClassValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<CreateStudentValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<UpdateStudentValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<StudentQueryValidator>();

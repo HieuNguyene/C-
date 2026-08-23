@@ -32,7 +32,8 @@ namespace W4.model
             if (string.IsNullOrWhiteSpace(newName))
             {
                 throw new ArgumentException("Tên lớp không được để trống.",nameof(newName));
-            }                       
+            }
+            ClassName = newName;
         }
         public void AddStudent(Student student)
         {

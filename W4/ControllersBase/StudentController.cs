@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using W3.DTOs.Respones;
-using W3.model;
-using W3.DTOs.Request;
-using W3.Interface;
-using W3.Responses;
+using Microsoft.AspNetCore.Mvc;
+using W4.Service.DTOs.Respones;
+using W4.Model.Entities;
+using W4.Service.DTOs.Request;
+using W4.Repository.Interfaces;
+using W4.Service.Interfaces;
+using W4.Common.Responses;
 namespace W3.Controllers
 {
     [Route("api/students")]
@@ -50,3 +51,5 @@ namespace W3.Controllers
         }
     }
 }
+
+

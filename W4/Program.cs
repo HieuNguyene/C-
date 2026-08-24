@@ -1,15 +1,17 @@
 
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using W3.Interface;
-using W3.Service;
+using W4.Repository.Interfaces;
+using W4.Service.Interfaces;
+using W4.Service.Implementations;
 using W4.middleware;
 using W4.FluentValidation;
-using W4.Interface;
-using W4.Repository;
-using W4.Data;
+using W4.Repository.Interfaces;
+using W4.Service.Interfaces;
+using W4.Repository.Implementations;
+using W4.Context.Data;
 using Microsoft.EntityFrameworkCore;
-using W4.Service;
+using W4.Service.Implementations;
 namespace W3
 {
     public class Program
@@ -62,3 +64,5 @@ namespace W3
         }
     }
 }
+
+

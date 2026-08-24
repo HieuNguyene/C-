@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 
 namespace W4.middleware
 {
@@ -30,3 +30,4 @@ namespace W4.middleware
         }
     }
 }
+

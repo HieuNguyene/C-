@@ -1,5 +1,5 @@
-﻿using FluentValidation;
-using W3.DTOs.Request;
+using FluentValidation;
+using W4.Service.DTOs.Request;
 
 namespace W4.FluentValidation
 {
@@ -21,3 +21,5 @@ namespace W4.FluentValidation
         }
     }
 }
+
+

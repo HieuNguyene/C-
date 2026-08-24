@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using W3.DTOs;
-using W4.Interface;
+using W4.Service.DTOs;
+using W4.Repository.Interfaces;
+using W4.Service.Interfaces;
 
 namespace W3.Controllers
 {
@@ -54,3 +55,5 @@ namespace W3.Controllers
         }
     }
 }
+
+

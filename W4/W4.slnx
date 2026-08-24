@@ -1,3 +1,8 @@
 <Solution>
+  <Project Path="W4.Common/W4.Common.csproj" />
+  <Project Path="W4.Context/W4.Context.csproj" />
   <Project Path="W4.csproj" />
+  <Project Path="W4.Model/W4.Model.csproj" />
+  <Project Path="W4.Repository/W4.Repository.csproj" />
+  <Project Path="W4.Service/W4.Service.csproj" />
 </Solution>

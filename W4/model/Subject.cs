@@ -15,8 +15,20 @@ namespace W4.model
         }
         public Subject(string subjectId,string subjectName)
         {
+            if (string.IsNullOrWhiteSpace(subjectId)) throw new ArgumentException("Mã môn học không được để trống", nameof(subjectId));
+            if (string.IsNullOrWhiteSpace(subjectName)) throw new ArgumentException("Tên môn học không được để trống", nameof(subjectName));
+            
             SubjectId = subjectId;
             SubjectName = subjectName;
+        }
+
+        public void UpdateSubjectName(string newName)
+        {
+            if (string.IsNullOrWhiteSpace(newName))
+            {
+                throw new ArgumentException("Tên môn học không được để trống", nameof(newName));
+            }
+            SubjectName = newName;
         }
 
     }

@@ -28,6 +28,10 @@ namespace W3
             builder.Services.AddScoped<IClassService, ClassService>();
             builder.Services.AddScoped<IStudentRepository, StudentRepository>();
             builder.Services.AddScoped<IStudentService, StudentService>();
+            builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
+            builder.Services.AddScoped<ISubjectService, SubjectService>();
+            builder.Services.AddScoped<IScoreRepository,ScoreRepository>();
+            builder.Services.AddScoped<IScoreService,ScoreService>();
             builder.Services.AddValidatorsFromAssemblyContaining<CreateClassValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<CreateStudentValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<UpdateStudentValidator>();

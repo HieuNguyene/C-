@@ -9,7 +9,7 @@ namespace W4.Interface
         Task<ApiResponse<Score>> CreateAsync(CreateScoreRequest request);
         Task<ApiResponse<List<Score>>> GetScoreByStudentAsync(Guid studentId);
         Task<ApiResponse<List<Score>>> GetScoreBySubjectAsync(string subjectId);
-        Task<ApiResponse<bool>> UpdateAsync(CreateScoreRequest request);
+        Task<ApiResponse<bool>> UpdateAsync(Guid scoreId, UpdateScoreRequest request);
         Task<ApiResponse<bool>> DeleteAsync(Guid id);
         
     }

@@ -12,6 +12,7 @@ namespace W4.Repository
         {
             _context = context;
         }
+
         public async Task<Score> CreateAsync(Score score)
         {
             _context.Scores.Add(score);
@@ -21,35 +22,32 @@ namespace W4.Repository
 
         public async Task<bool> DeleteAsync(Guid id)
         {
-            Score? score = await GetByIdAsync(id);
-            if(score == null)
-            {
-                throw new KeyNotFoundException("Điểm số không tồn tại");
-            }
-            _context.Scores.Remove(score);
-            await _context.SaveChangesAsync();
-            return true;
+            
+            // Xóa trực tiếp dưới Database mà không cần tốn công lấy dữ liệu lên bộ nhớ trước
+            int rowsDeleted = await _context.Scores.Where(sc => sc.Id == id).ExecuteDeleteAsync();
+            return rowsDeleted > 0;
         }
 
         public async Task<Score?> GetByIdAsync(Guid id)
         {
-            return await _context.Scores.FirstOrDefaultAsync( sc => sc.Id ==id);
+            return await _context.Scores.FirstOrDefaultAsync(sc => sc.Id == id);
         }
 
         public async Task<List<Score>> GetScoreBySubjectAsync(string subjectId)
         {
-            return await  _context.Scores.Where(sc => sc.SubjectId == subjectId).ToListAsync();
-
+            // Tối ưu: Dùng AsNoTracking cho các truy vấn chỉ để ĐỌC (Tăng tốc độ)
+            return await _context.Scores.AsNoTracking().Where(sc => sc.SubjectId == subjectId).ToListAsync();
         }
 
         public async Task<List<Score>> GetScoresByStudentAsync(Guid studentId)
         {
-            return await _context.Scores.Where(sc => sc.StudentId ==studentId).ToListAsync();
+            // Tối ưu: Dùng AsNoTracking cho các truy vấn chỉ để ĐỌC (Tăng tốc độ)
+            return await _context.Scores.AsNoTracking().Where(sc => sc.StudentId == studentId).ToListAsync();
         }
 
         public async Task<Score?> GetSpecificScoreAsync(Guid studentId, string subjectId)
         {
-            return await _context.Scores.FirstOrDefaultAsync(sc => sc.StudentId ==studentId && sc.SubjectId ==subjectId);
+            return await _context.Scores.FirstOrDefaultAsync(sc => sc.StudentId == studentId && sc.SubjectId == subjectId);
         }
 
         public async Task<bool> UpdateAsync(Score score)

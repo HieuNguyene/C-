@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using W4.Model.Entities;
-using W4.Model.Entities;
 
 namespace W4.Context.Data
 {
@@ -8,8 +7,8 @@ namespace W4.Context.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            
-        } 
+
+        }
         public DbSet<Student> Students => Set<Student>();
         public DbSet<Subject> Subjects => Set<Subject>();
         public DbSet<Score> Scores => Set<Score>();
@@ -25,7 +24,7 @@ namespace W4.Context.Data
         // {
         //     return base.SaveChangesAsync(cancellationToken);
         // }
-        protected override void OnModelCreating (ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Student>(entity =>
@@ -35,10 +34,10 @@ namespace W4.Context.Data
                     .IsRequired()
                     .HasMaxLength(100);
                 entity.Property(x => x.DateOfBirth);
-                    
+
                 entity.Property(x => x.Gender);
-                
-                entity.HasOne(x =>x.Class)
+
+                entity.HasOne(x => x.Class)
                     .WithMany(c => c.Students)
                     .HasForeignKey(s => s.ClassId)
                     .OnDelete(DeleteBehavior.Restrict);// k cho xóa lớp nếu bên trong có học sinh
@@ -48,26 +47,26 @@ namespace W4.Context.Data
 
             modelBuilder.Entity<Class>(entity =>
             {
-               entity.HasKey(x => x.ClassId);
-               entity.Property(x => x.ClassName)
-                    .IsRequired()
-                    .HasMaxLength(50); 
+                entity.HasKey(x => x.ClassId);
+                entity.Property(x => x.ClassName)
+                     .IsRequired()
+                     .HasMaxLength(50);
                 entity.Metadata.FindNavigation(nameof(Class.Students))
                 ?.SetPropertyAccessMode(PropertyAccessMode.Field);
             });
             modelBuilder.Entity<Subject>(entity =>
             {
-               entity.HasKey(x => x.SubjectId);
-               entity.Property(x => x.SubjectName)
-                    .IsRequired();
+                entity.HasKey(x => x.SubjectId);
+                entity.Property(x => x.SubjectName)
+                     .IsRequired();
                 entity.Metadata.FindNavigation(nameof(Subject.Scores))
                 ?.SetPropertyAccessMode(PropertyAccessMode.Field);
             });
             modelBuilder.Entity<Score>(entity =>
             {
-                entity.HasKey(s =>s.Id);
+                entity.HasKey(s => s.Id);
 
-                entity.HasOne(score =>score.Subject)
+                entity.HasOne(score => score.Subject)
                     .WithMany(subj => subj.Scores)
                     .HasForeignKey(score => score.SubjectId)
                     .OnDelete(DeleteBehavior.Restrict); // không được xóa môn nếu đã có điểm
@@ -78,7 +77,7 @@ namespace W4.Context.Data
             });
 
         }
-        
+
     }
 }
 

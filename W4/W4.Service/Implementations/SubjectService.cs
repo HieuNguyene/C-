@@ -75,9 +75,9 @@ namespace W4.Service.Implementations
         public async Task<ApiResponse<List<Subject>>> GetAllAsync()
         {
             _logger.LogInformation("Đang lấy danh sách tất cả môn học");
-            
+
             var subjects = await _repository.GetAllAsync();
-            
+
             return new ApiResponse<List<Subject>>
             {
                 Success = true,
@@ -137,6 +137,7 @@ namespace W4.Service.Implementations
         }
     }
 }
+
 
 
 

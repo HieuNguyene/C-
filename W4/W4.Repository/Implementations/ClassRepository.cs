@@ -21,18 +21,18 @@ namespace W4.Repository.Implementations
         public async Task<bool> DeleteByIdAsync(string ClassId)
         {
             Class? @class = await GetByIdAsync(ClassId);
-            if(@class == null)
+            if (@class == null)
             {
                 return false;
             }
             _context.Remove(@class);
-             await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return true;
         }
 
         public async Task<List<Class>> GetAllClassAsync()
         {
-           return await _context.Classes.AsNoTracking().ToListAsync();
+            return await _context.Classes.AsNoTracking().ToListAsync();
         }
 
         public async Task<Class?> GetByIdAsync(string ClassId)

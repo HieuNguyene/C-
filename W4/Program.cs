@@ -1,4 +1,4 @@
-
+using W4.Extensions;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using W4.Repository.Interfaces;
@@ -6,12 +6,10 @@ using W4.Service.Interfaces;
 using W4.Service.Implementations;
 using W4.middleware;
 using W4.FluentValidation;
-using W4.Repository.Interfaces;
-using W4.Service.Interfaces;
 using W4.Repository.Implementations;
 using W4.Context.Data;
 using Microsoft.EntityFrameworkCore;
-using W4.Service.Implementations;
+
 namespace W3
 {
     public class Program
@@ -26,14 +24,8 @@ namespace W3
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddScoped<IClassRepository, ClassRepository>();
-            builder.Services.AddScoped<IClassService, ClassService>();
-            builder.Services.AddScoped<IStudentRepository, StudentRepository>();
-            builder.Services.AddScoped<IStudentService, StudentService>();
-            builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
-            builder.Services.AddScoped<ISubjectService, SubjectService>();
-            builder.Services.AddScoped<IScoreRepository,ScoreRepository>();
-            builder.Services.AddScoped<IScoreService,ScoreService>();
+            builder.Services.AddApplicationServices();
+            builder.Services.AddInfrastructureServices();
             builder.Services.AddValidatorsFromAssemblyContaining<CreateClassValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<CreateStudentValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<UpdateStudentValidator>();
@@ -64,5 +56,6 @@ namespace W3
         }
     }
 }
+
 
 

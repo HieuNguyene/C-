@@ -12,11 +12,12 @@ namespace W4.Service.Interfaces
 
         Task<ApiResponse<StudentResponse>> CreateAsync(CreateStudentRequest request);
 
-        Task<ApiResponse<bool>> UpdateByIdAsync(Guid id,UpdateStudentRequest request);
+        Task<ApiResponse<bool>> UpdateByIdAsync(Guid id, UpdateStudentRequest request);
 
         Task<ApiResponse<bool>> DeleteByIdAsync(Guid id);
     }
 }
+
 
 
 

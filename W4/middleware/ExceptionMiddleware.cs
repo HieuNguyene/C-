@@ -9,7 +9,7 @@ namespace W4.middleware
         private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionMiddleware> _logger;
 
-        public ExceptionMiddleware(RequestDelegate next,ILogger<ExceptionMiddleware> logger)
+        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
         {
             _next = next;
             _logger = logger;
@@ -22,7 +22,7 @@ namespace W4.middleware
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex,"Có lỗi xảy ra trong quá trình xử lý Request");
+                _logger.LogError(ex, "Có lỗi xảy ra trong quá trình xử lý Request");
                 context.Response.ContentType = "application/json";
                 var response = new ApiResponse<object>
                 {
@@ -47,10 +47,10 @@ namespace W4.middleware
                         response.Message = "Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau.";
                         break;
                 }
-                await context.Response.WriteAsync(JsonSerializer.Serialize(response));   
+                await context.Response.WriteAsync(JsonSerializer.Serialize(response));
             }
         }
-        }
     }
+}
 
 

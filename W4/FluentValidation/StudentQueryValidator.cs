@@ -3,7 +3,7 @@ using W4.Service.DTOs.Request;
 
 namespace W4.FluentValidation
 {
-    public class StudentQueryValidator:AbstractValidator<StudentQueryRequest>
+    public class StudentQueryValidator : AbstractValidator<StudentQueryRequest>
     {
         public StudentQueryValidator()
         {
@@ -14,7 +14,7 @@ namespace W4.FluentValidation
                     .NotEmpty().WithMessage("Từ khóa tìm kiếm (Keyword) không được để trống nếu có truyền!")
                     .MinimumLength(2).WithMessage("Từ khóa tìm kiếm nên có ít nhất 2 ký tự.");
             });
-            
+
             RuleFor(x => x.Page)
                 .GreaterThanOrEqualTo(1).WithMessage("Trang (Page) phải lớn hơn hoặc bằng 1.");
 

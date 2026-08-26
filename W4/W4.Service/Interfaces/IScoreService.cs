@@ -12,9 +12,10 @@ namespace W4.Service.Interfaces
         Task<ApiResponse<List<Score>>> GetScoreBySubjectAsync(string subjectId);
         Task<ApiResponse<bool>> UpdateAsync(Guid scoreId, UpdateScoreRequest request);
         Task<ApiResponse<bool>> DeleteAsync(Guid id);
-        
+
     }
 }
+
 
 
 

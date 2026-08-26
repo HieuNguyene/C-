@@ -16,7 +16,7 @@ namespace W3.Controllers
             _service = service;
         }
 
-       
+
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
@@ -24,7 +24,7 @@ namespace W3.Controllers
             return Ok(result);
         }
 
-        
+
         [HttpGet("{subjectId}")]
         public async Task<IActionResult> GetByIdAsync(string subjectId)
         {
@@ -39,7 +39,7 @@ namespace W3.Controllers
             return Ok(result);
         }
 
- 
+
         [HttpPut("{subjectId}")]
         public async Task<IActionResult> UpdateAsync(string subjectId, [FromBody] UpdateSubjectRequest request)
         {

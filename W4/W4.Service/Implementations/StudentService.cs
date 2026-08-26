@@ -6,8 +6,6 @@ using W4.Repository.Interfaces;
 using W4.Service.Interfaces;
 using W4.Model.Entities;
 using W4.Common.Responses;
-using W4.Repository.Interfaces;
-using W4.Service.Interfaces;
 
 namespace W4.Service.Implementations
 {
@@ -131,6 +129,7 @@ namespace W4.Service.Implementations
 
     }
 }
+
 
 
 

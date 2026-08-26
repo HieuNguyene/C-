@@ -12,8 +12,8 @@ namespace W4.Repository.Interfaces
 
         Task<List<Score>> GetScoreBySubjectAsync(string subjectId);
 
-        Task<Score?> GetSpecificScoreAsync(Guid studentId,string subjectId);
-    }    
+        Task<Score?> GetSpecificScoreAsync(Guid studentId, string subjectId);
+    }
 }
 
 

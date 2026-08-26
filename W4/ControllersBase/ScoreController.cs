@@ -33,7 +33,7 @@ namespace W4.ControllersBase
         [HttpPut("{scoreId}")]
         public async Task<IActionResult> UpdateAsync(Guid scoreId, UpdateScoreRequest request)
         {
-            var result = await _service.UpdateAsync(scoreId,request);
+            var result = await _service.UpdateAsync(scoreId, request);
             return Ok(result);
         }
         [HttpDelete("{scoreId}")]

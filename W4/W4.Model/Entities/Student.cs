@@ -7,8 +7,8 @@ namespace W4.Model.Entities
     {
         public Guid Id { get; set; }
         public string Name { private set; get; } = string.Empty;
-        public DateTime DateOfBirth { get;private set; }
-        public GenderType Gender { get;private set; }
+        public DateTime DateOfBirth { get; private set; }
+        public GenderType Gender { get; private set; }
 
         //liên hệ với lớp học
         public string? ClassId { get; private set; }
@@ -33,7 +33,7 @@ namespace W4.Model.Entities
         }
         public void TransferToClass(String newClassId)
         {
-            
+
             if (string.IsNullOrWhiteSpace(newClassId))
             {
                 throw new ArgumentNullException("Mã lớp không hợp lệ");

@@ -4,7 +4,6 @@ using W4.Common.Responses;
 using W4.Repository.Interfaces;
 using W4.Service.Interfaces;
 using W4.Model.Entities;
-using W4.Repository.Implementations;
 
 namespace W4.Service.Implementations
 {
@@ -113,7 +112,7 @@ namespace W4.Service.Implementations
 
             scoreToUpdate.UpdateValue(request.Value);
             var result = await _repository.UpdateAsync(scoreToUpdate);
-            
+
             _logger.LogInformation("Đã cập nhật điểm thành công");
             return new ApiResponse<bool>
             {
@@ -124,6 +123,7 @@ namespace W4.Service.Implementations
         }
     }
 }
+
 
 
 

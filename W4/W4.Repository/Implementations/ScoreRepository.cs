@@ -22,7 +22,7 @@ namespace W4.Repository.Implementations
 
         public async Task<bool> DeleteAsync(Guid id)
         {
-            
+
             // Xóa trực tiếp dưới Database mà không cần tốn công lấy dữ liệu lên bộ nhớ trước
             int rowsDeleted = await _context.Scores.Where(sc => sc.Id == id).ExecuteDeleteAsync();
             return rowsDeleted > 0;

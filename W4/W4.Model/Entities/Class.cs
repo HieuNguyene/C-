@@ -1,12 +1,12 @@
-
 using W4.Model.Entities;
+
 
 namespace W4.Model.Entities
 {
     public class Class
     {
-        public String ClassId {get;private set;} 
-        public String ClassName{get;private set;}
+        public String ClassId { get; private set; }
+        public String ClassName { get; private set; }
         private readonly List<Student> _students = new List<Student>(); // nơi lưu trữ thông tin thật, readonly để không cho phép dùng new
         public IReadOnlyCollection<Student> Students => _students.AsReadOnly(); //thông tin ra bên ngoài chỉ được đọc 
         protected Class()
@@ -18,7 +18,7 @@ namespace W4.Model.Entities
         {
             if (String.IsNullOrWhiteSpace(classId))
             {
-                throw new ArgumentException("Mã lớp (classId) không được để trống." ,nameof(classId));
+                throw new ArgumentException("Mã lớp (classId) không được để trống.", nameof(classId));
             }
             if (String.IsNullOrWhiteSpace(className))
             {
@@ -31,19 +31,19 @@ namespace W4.Model.Entities
         {
             if (string.IsNullOrWhiteSpace(newName))
             {
-                throw new ArgumentException("Tên lớp không được để trống.",nameof(newName));
+                throw new ArgumentException("Tên lớp không được để trống.", nameof(newName));
             }
             ClassName = newName;
         }
         public void AddStudent(Student student)
         {
-            if(student == null)
+            if (student == null)
             {
                 throw new ArgumentNullException(nameof(student));
             }
             _students.Add(student);
         }
-    }    
+    }
 }
 
 

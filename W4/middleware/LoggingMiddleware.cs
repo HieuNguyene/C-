@@ -7,7 +7,8 @@ namespace W4.middleware
         private readonly RequestDelegate _next;
         private readonly ILogger<LoggingMiddleware> _logger;
 
-        public LoggingMiddleware(RequestDelegate next,ILogger<LoggingMiddleware> logger) { 
+        public LoggingMiddleware(RequestDelegate next, ILogger<LoggingMiddleware> logger)
+        {
             _next = next;
             _logger = logger;
         }

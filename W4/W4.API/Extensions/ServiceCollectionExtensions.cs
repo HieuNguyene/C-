@@ -1,4 +1,4 @@
-﻿using W4.Application.DTOs;
+using W4.Application.DTOs;
 using W4.Application.Validations;
 using W4.Infrastructure.Repositories.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +17,10 @@ namespace W4.API.Extensions
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<ISubjectService, SubjectService>();
             services.AddScoped<IScoreService, ScoreService>();
+
+            var applicationAssembly = typeof(W4.Application.Features.Students.Commands.CreateStudentCommand).Assembly;
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(applicationAssembly));
+
             return services;
         }
 

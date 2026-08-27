@@ -1,0 +1,53 @@
+using MediatR;
+using Microsoft.Extensions.Logging;
+using W4.Application.DTOs;
+using W4.Domain.Entities;
+using W4.Domain.Enums;
+using W4.Infrastructure.Repositories.Interfaces;
+
+namespace W4.Application.Features.Students.Commands
+{
+    public class UpdateStudentCommand: IRequest<ApiResponse<bool>>
+    {
+        public Guid Id {get;set;}
+        public string Name {get;set;} =string.Empty;
+        public DateTime Dob {get;set;}
+        public GenderType Gender{get;set;}
+        public string?  ClassId{get;set;}
+    }
+
+    public class UpdateStudentHandler : IRequestHandler<UpdateStudentCommand, ApiResponse<bool>>
+    {
+       private readonly IStudentRepository _repository;
+        private readonly ILogger<UpdateStudentHandler> _logger;
+        public UpdateStudentHandler(IStudentRepository repository, ILogger<UpdateStudentHandler> logger)
+        {
+            _repository = repository;
+            _logger = logger;
+        }        
+        public async Task<ApiResponse<bool>> Handle(UpdateStudentCommand request, CancellationToken cancellationToken)
+        {
+                _logger.LogInformation("Update Student: Id={Id}", request.Id);
+            Student? student = await _repository.GetByIdAsync(request.Id);
+            if (student == null)
+            {
+                _logger.LogWarning("Student not found. Id={Id}",request.Id);
+                throw new KeyNotFoundException("Sinh viên này không tồn tại");
+            }
+            student.ChangeName(request.Name);
+            student.ChangeDob(request.Dob );
+            student.ChangeGender(request.Gender);
+            if(request.ClassId != null)
+            {
+                student.TransferToClass(request.ClassId);
+            }
+            await _repository.UpdateAsync(student);
+            return new ApiResponse<bool>
+            {
+                Success = true,
+                Message = "Cập nhật thành công!",
+                Data = true
+            };
+        }
+    }
+}

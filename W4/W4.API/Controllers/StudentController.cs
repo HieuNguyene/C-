@@ -26,6 +26,7 @@ namespace W4.API.Controllers
             var response = await _mediator.Send(query);
             return Ok(response);
         }
+        
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] CreateStudentCommand command)
         {

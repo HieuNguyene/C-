@@ -1,52 +1,34 @@
-﻿using W4.Application.DTOs;
-using W4.Application.Validations;
-using W4.Infrastructure.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-
-using W4.Application.Interfaces;
+using MediatR;
+using W4.Application.Features.Classes.Commands;
+using W4.Application.Features.Classes.Queries;
 
 namespace W4.API.Controllers
 {
-    [Route("api/classes")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ClassController : ControllerBase
     {
-        private readonly IClassService _service;
-        public ClassController(IClassService service)
-        {
-            _service = service;
-        }
+        private readonly IMediator _mediator;
+        public ClassController(IMediator mediator) => _mediator = mediator;
+
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
-        {
-            var result = await _service.GetAllAsync();
-            return Ok(result);
-        }
+        public async Task<IActionResult> GetAll() => Ok(await _mediator.Send(new GetAllClassesQuery()));
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(string id) => Ok(await _mediator.Send(new GetClassByIdQuery(id)));
+
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(CreateClassRequest request)
+        public async Task<IActionResult> Create([FromBody] CreateClassCommand command) => Ok(await _mediator.Send(command));
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(string id, [FromBody] UpdateClassCommand command)
         {
-            var result = await _service.CreateAsync(request);
-            return Ok(result);
+            command.ClassId = id;
+            return Ok(await _mediator.Send(command));
         }
-        [HttpPut]
-        public async Task<IActionResult> UpdateAsync(string classId, CreateClassRequest request)
-        {
-            var result = await _service.UpdateAsync(classId, request);
-            return Ok(result);
-        }
-        [HttpDelete]
-        public async Task<IActionResult> DeleteAsync(string classId)
-        {
-            var result = await _service.DeleteAsync(classId);
-            return Ok(result);
-        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id) => Ok(await _mediator.Send(new DeleteClassCommand(id)));
     }
 }
-
-
-
-
-
-
-
-

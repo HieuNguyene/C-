@@ -1,57 +1,32 @@
-﻿using W4.Application.DTOs;
-using W4.Application.Validations;
-using W4.Infrastructure.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using MediatR;
+using System;
+using W4.Application.Features.Scores.Commands;
+using W4.Application.Features.Scores.Queries;
 
-using W4.Application.Implementations;
-
-using W4.Application.Interfaces;
-
-namespace W4.ControllersBase
+namespace W4.API.Controllers
 {
-    [Route("api/scores")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class ScoreController(IScoreService service) : ControllerBase
+    public class ScoreController : ControllerBase
     {
-        private readonly IScoreService _service = service;
+        private readonly IMediator _mediator;
+        public ScoreController(IMediator mediator) => _mediator = mediator;
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id) => Ok(await _mediator.Send(new GetScoreByIdQuery(id)));
 
         [HttpPost]
-        public async Task<IActionResult> CreateScoreAsync(CreateScoreRequest request)
+        public async Task<IActionResult> Create([FromBody] CreateScoreCommand command) => Ok(await _mediator.Send(command));
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateScoreCommand command)
         {
-            var result = await _service.CreateAsync(request);
-            return Ok(result);
+            command.Id = id;
+            return Ok(await _mediator.Send(command));
         }
-        [HttpGet("student/{studenId}")]
-        public async Task<IActionResult> GetScoreByStudent(Guid studenId)
-        {
-            var result = await _service.GetScoreByStudentAsync(studenId);
-            return Ok(result);
-        }
-        [HttpGet("subject/{subjectId}")]
-        public async Task<IActionResult> GetScoreBySubject(string subjectId)
-        {
-            var result = await _service.GetScoreBySubjectAsync(subjectId);
-            return Ok(result);
-        }
-        [HttpPut("{scoreId}")]
-        public async Task<IActionResult> UpdateAsync(Guid scoreId, UpdateScoreRequest request)
-        {
-            var result = await _service.UpdateAsync(scoreId, request);
-            return Ok(result);
-        }
-        [HttpDelete("{scoreId}")]
-        public async Task<IActionResult> DeleteAsync(Guid scoreId)
-        {
-            var result = await _service.DeleteAsync(scoreId);
-            return Ok(result);
-        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id) => Ok(await _mediator.Send(new DeleteScoreCommand(id)));
     }
 }
-
-
-
-
-
-
-
-

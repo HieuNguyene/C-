@@ -4,8 +4,8 @@ using W4.Infrastructure.Repositories.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using W4.Infrastructure.Repositories.Interfaces;
 using W4.Infrastructure.Repositories.Implementations;
-using W4.Application.Interfaces;
-using W4.Application.Implementations;
+
+
 
 namespace W4.API.Extensions
 {
@@ -13,10 +13,9 @@ namespace W4.API.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddScoped<IClassService, ClassService>();
-            services.AddScoped<IStudentService, StudentService>();
-            services.AddScoped<ISubjectService, SubjectService>();
-            services.AddScoped<IScoreService, ScoreService>();
+            
+            
+            
 
             var applicationAssembly = typeof(W4.Application.Features.Students.Commands.CreateStudentCommand).Assembly;
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(applicationAssembly));

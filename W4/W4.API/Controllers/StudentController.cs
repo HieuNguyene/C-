@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using W4.Domain.Entities;
 
 
-using W4.Application.Interfaces;
+
 using W4.Application.Features.Students.Commands;
 using W4.Application.Features.Students.Queries;
 namespace W4.API.Controllers
@@ -15,17 +15,15 @@ namespace W4.API.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
-        private readonly IStudentService _service;
         private readonly MediatR.IMediator _mediator;
-        public StudentController(IStudentService service, MediatR.IMediator mediator)
+        public StudentController(MediatR.IMediator mediator)
         {
-            _service = service;
             _mediator = mediator;
         }
         [HttpGet("search")]
-        public async Task<IActionResult> GetByKeyWordAsync([FromBody] StudentQueryRequest request)
+        public async Task<IActionResult> GetByKeyWordAsync([FromQuery] GetStudentByKeyWordQuery query)
         {
-            var response = await _service.GetByKeyWordAsync(request);
+            var response = await _mediator.Send(query);
             return Ok(response);
         }
         [HttpPost]
@@ -38,12 +36,12 @@ namespace W4.API.Controllers
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
             var query = new GetStudentByIdQuery(id);
-            var result = await _mediator.Send(id);
+            var result = await _mediator.Send(query);
             return Ok(result);
 
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(Guid id,[FromBody] UpdateStudentCommand command)
+        public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] UpdateStudentCommand command)
         {
             command.Id = id;
             var result = await _mediator.Send(command);

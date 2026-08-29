@@ -1,68 +1,34 @@
-﻿using W4.Application.DTOs;
-using W4.Application.Validations;
-using W4.Infrastructure.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-
-using W4.Application.Interfaces;
+using MediatR;
+using W4.Application.Features.Subjects.Commands;
+using W4.Application.Features.Subjects.Queries;
 
 namespace W4.API.Controllers
 {
-    [Route("api/subjects")]
+    [Route("api/[controller]")]
     [ApiController]
     public class SubjectController : ControllerBase
     {
-        private readonly ISubjectService _service;
-
-        public SubjectController(ISubjectService service)
-        {
-            _service = service;
-        }
-
+        private readonly IMediator _mediator;
+        public SubjectController(IMediator mediator) => _mediator = mediator;
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
-        {
-            var result = await _service.GetAllAsync();
-            return Ok(result);
-        }
+        public async Task<IActionResult> GetAll() => Ok(await _mediator.Send(new GetAllSubjectsQuery()));
 
-
-        [HttpGet("{subjectId}")]
-        public async Task<IActionResult> GetByIdAsync(string subjectId)
-        {
-            var result = await _service.GetByIdAsync(subjectId);
-            return Ok(result);
-        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(string id) => Ok(await _mediator.Send(new GetSubjectByIdQuery(id)));
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody] CreateSubjectRequest request)
+        public async Task<IActionResult> Create([FromBody] CreateSubjectCommand command) => Ok(await _mediator.Send(command));
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(string id, [FromBody] UpdateSubjectCommand command)
         {
-            var result = await _service.CreateAsync(request);
-            return Ok(result);
+            command.SubjectId = id;
+            return Ok(await _mediator.Send(command));
         }
 
-
-        [HttpPut("{subjectId}")]
-        public async Task<IActionResult> UpdateAsync(string subjectId, [FromBody] UpdateSubjectRequest request)
-        {
-            var result = await _service.UpdateAsync(subjectId, request);
-            return Ok(result);
-        }
-
-        [HttpDelete("{subjectId}")]
-        public async Task<IActionResult> DeleteAsync(string subjectId)
-        {
-            var result = await _service.DeleteAsync(subjectId);
-            return Ok(result);
-        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id) => Ok(await _mediator.Send(new DeleteSubjectCommand(id)));
     }
 }
-
-
-
-
-
-
-
-
-

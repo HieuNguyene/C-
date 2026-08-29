@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using W4.Application.DTOs;
-using W4.Infrastructure.Repositories.Interfaces;
+using W4.Application.Interfaces;
 
 namespace W4.Application.Features.Students.Queries
 {

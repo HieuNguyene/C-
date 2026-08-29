@@ -2,13 +2,13 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using W4.Application.DTOs;
 using W4.Domain.Entities;
-using W4.Infrastructure.Repositories.Interfaces;
+using W4.Application.Interfaces;
 
 namespace W4.Application.Features.Students.Queries
 {
-    public class GetStudentByIdQuery: IRequest<ApiResponse<StudentResponse>>
+    public class GetStudentByIdQuery : IRequest<ApiResponse<StudentResponse>>
     {
-        public Guid Id {get;set;}
+        public Guid Id { get; set; }
         public GetStudentByIdQuery(Guid id)
         {
             Id = id;

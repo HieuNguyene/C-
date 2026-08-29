@@ -2,17 +2,17 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using W4.Application.DTOs;
 using W4.Domain.Entities;
-using W4.Infrastructure.Repositories.Interfaces;
+using W4.Application.Interfaces;
 
 namespace W4.Application.Features.Students.Commands
 {
     public class DeleteStudentCommand : IRequest<ApiResponse<bool>>
     {
-        public Guid Id {get;set;} 
+        public Guid Id { get; set; }
         public DeleteStudentCommand(Guid id)
         {
             Id = id;
-        }  
+        }
     }
     public class DeleteStudentCommandHandler : IRequestHandler<DeleteStudentCommand, ApiResponse<bool>>
     {
@@ -26,11 +26,11 @@ namespace W4.Application.Features.Students.Commands
         }
         public async Task<ApiResponse<bool>> Handle(DeleteStudentCommand request, CancellationToken cancellationToken)
         {
-             _logger.LogInformation("Delete Student: Id={Id}",request.Id);
+            _logger.LogInformation("Delete Student: Id={Id}", request.Id);
             Student? student = await _repository.GetByIdAsync(request.Id);
             if (student == null)
             {
-                _logger.LogWarning("Not found Student: Id={Id}",request.Id);
+                _logger.LogWarning("Not found Student: Id={Id}", request.Id);
                 return new ApiResponse<bool>()
                 {
                     Success = false,
@@ -45,5 +45,5 @@ namespace W4.Application.Features.Students.Commands
                 Data = true
             };
         }
-    }    
+    }
 }

@@ -1,6 +1,6 @@
 using W4.Application.DTOs;
 using W4.Application.Validations;
-using W4.Infrastructure.Repositories.Interfaces;
+using W4.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 using W4.Domain.Entities;
@@ -26,7 +26,7 @@ namespace W4.API.Controllers
             var response = await _mediator.Send(query);
             return Ok(response);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] CreateStudentCommand command)
         {

@@ -1,9 +1,7 @@
-﻿<Solution>
-  <Folder Name="/Solution Items/">
-    <File Path="README.md" />
-  </Folder>
-  <Project Path="W4.API\W4.API.csproj" />
-  <Project Path="W4.Application\W4.Application.csproj" />
-  <Project Path="W4.Infrastructure\W4.Infrastructure.csproj" />
-  <Project Path="W4.Domain\W4.Domain.csproj" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Solution xmlns="http://schemas.microsoft.com/developer/msbuild/2021">
+  <Project Path="W4.API/W4.API.csproj" />
+  <Project Path="W4.Application/W4.Application.csproj" />
+  <Project Path="W4.Infrastructure/W4.Infrastructure.csproj" />
+  <Project Path="W4.Domain/W4.Domain.csproj" />
 </Solution>

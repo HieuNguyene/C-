@@ -1,10 +1,10 @@
 using W4.Application.DTOs;
 using W4.Application.Validations;
-using W4.Infrastructure.Repositories.Interfaces;
+using W4.Application.Interfaces;
 using W4.API.Extensions;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using W4.Infrastructure.Repositories.Interfaces;
+using W4.Application.Interfaces;
 
 
 using W4.API.Middlewares;

@@ -1,4 +1,4 @@
-﻿using W4.Infrastructure.Repositories.Interfaces;
+using W4.Application.Interfaces;
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;

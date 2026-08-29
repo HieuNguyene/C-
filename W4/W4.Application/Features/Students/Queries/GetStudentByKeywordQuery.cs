@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using W4.Application.DTOs;
-using W4.Infrastructure.Repositories.Interfaces;
+using W4.Application.Interfaces;
 
 namespace W4.Application.Features.Students.Queries
 {
@@ -10,8 +10,8 @@ namespace W4.Application.Features.Students.Queries
         public string? Keyword { get; set; }
         public int PageSize { get; set; } = 10;
         public int Page { get; set; } = 1;
-        
-        public GetStudentByKeyWordQuery(string keyWord,int pageSize, int pageNumber)
+
+        public GetStudentByKeyWordQuery(string keyWord, int pageSize, int pageNumber)
         {
             Keyword = keyWord;
             PageSize = pageSize;

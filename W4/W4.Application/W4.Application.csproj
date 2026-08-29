@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -10,6 +10,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\W4.Domain\W4.Domain.csproj" />
-    <ProjectReference Include="..\W4.Infrastructure\W4.Infrastructure.csproj" />
+    
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 using MediatR;
 using System;
 using W4.Application.DTOs;
-using W4.Infrastructure.Repositories.Interfaces;
+using W4.Application.Interfaces;
 
 namespace W4.Application.Features.Scores.Commands
 {
@@ -21,7 +21,7 @@ namespace W4.Application.Features.Scores.Commands
             // We just pass it to repo for now
             var existing = await _repo.GetByIdAsync(request.Id);
             if (existing == null) return new ApiResponse<bool> { Success = false };
-            
+
             // update logic here - assume repo.UpdateAsync handles it
             await _repo.UpdateAsync(existing);
             return new ApiResponse<bool> { Success = true, Data = true };

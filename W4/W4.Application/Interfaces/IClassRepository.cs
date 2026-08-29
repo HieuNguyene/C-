@@ -1,7 +1,7 @@
-﻿using W4.Infrastructure.Repositories.Interfaces;
+using W4.Application.Interfaces;
 using W4.Domain.Entities;
 
-namespace W4.Infrastructure.Repositories.Interfaces
+namespace W4.Application.Interfaces
 {
     public interface IClassRepository
     {

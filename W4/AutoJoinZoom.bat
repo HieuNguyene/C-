@@ -1,3 +1,0 @@
-@echo off
-echo Dang mo Zoom...
-start "" "https://us05web.zoom.us/j/83037250658?pwd=ccxGYmNEUgbKY15OK8UOYwOslOa9m3.1"

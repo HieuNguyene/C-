@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using System;
 using W4.Application.Features.Scores.Commands;
@@ -6,7 +6,7 @@ using W4.Application.Features.Scores.Queries;
 
 namespace W4.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/score")]
     [ApiController]
     public class ScoreController : ControllerBase
     {

@@ -11,7 +11,7 @@ using W4.Application.Features.Students.Commands;
 using W4.Application.Features.Students.Queries;
 namespace W4.API.Controllers
 {
-    [Route("api/students")]
+    [Route("api/student")]
     [ApiController]
     public class StudentController : ControllerBase
     {

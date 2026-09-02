@@ -1,11 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using W4.Application.Features.Subjects.Commands;
 using W4.Application.Features.Subjects.Queries;
 
 namespace W4.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/subject")]
     [ApiController]
     public class SubjectController : ControllerBase
     {

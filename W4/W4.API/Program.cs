@@ -4,11 +4,11 @@ using W4.Application.Interfaces;
 using W4.API.Extensions;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using W4.Application.Interfaces;
+
 
 
 using W4.API.Middlewares;
-using W4.Application.Validations;
+
 using W4.Infrastructure.Repositories.Implementations;
 using W4.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +38,10 @@ namespace W4.API
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+            // Đăng ký IDbConnection cho Dapper
+            builder.Services.AddScoped<System.Data.IDbConnection>(sp =>
+                new Microsoft.Data.SqlClient.SqlConnection(builder.Configuration.GetConnectionString("DefaultConnection"))
+            );
             var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

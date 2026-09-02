@@ -1,11 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using W4.Application.Features.Classes.Commands;
 using W4.Application.Features.Classes.Queries;
 
 namespace W4.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/class")]
     [ApiController]
     public class ClassController : ControllerBase
     {

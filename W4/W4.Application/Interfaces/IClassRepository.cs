@@ -10,7 +10,7 @@ namespace W4.Application.Interfaces
         Task<Class?> GetByIdAsync(String ClassId);
         Task<bool> UpdateAsync(Class newClass);
         Task<bool> DeleteByIdAsync(String ClassId);
-
+        Task<int> CountStudentsInClassAsync(string classId);
     }
 }
 

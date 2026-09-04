@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using System;
 using W4.Application.Features.Scores.Commands;
@@ -8,7 +8,7 @@ namespace W4.API.Controllers
 {
     [Route("api/score")]
     [ApiController]
-    public class ScoreController : ControllerBase
+    public class ScoreController : ApiControllerBase
     {
         private readonly IMediator _mediator;
         public ScoreController(IMediator mediator) => _mediator = mediator;
@@ -23,10 +23,11 @@ namespace W4.API.Controllers
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateScoreCommand command)
         {
             command.Id = id;
-            return Ok(await _mediator.Send(command));
+            return HandleResult(await _mediator.Send(command));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id) => Ok(await _mediator.Send(new DeleteScoreCommand(id)));
     }
 }
+

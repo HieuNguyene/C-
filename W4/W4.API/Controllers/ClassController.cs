@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using W4.Application.Features.Classes.Commands;
 using W4.Application.Features.Classes.Queries;
@@ -7,7 +7,7 @@ namespace W4.API.Controllers
 {
     [Route("api/class")]
     [ApiController]
-    public class ClassController : ControllerBase
+    public class ClassController : ApiControllerBase
     {
         private readonly IMediator _mediator;
         public ClassController(IMediator mediator) => _mediator = mediator;
@@ -25,10 +25,11 @@ namespace W4.API.Controllers
         public async Task<IActionResult> Update(string id, [FromBody] UpdateClassCommand command)
         {
             command.ClassId = id;
-            return Ok(await _mediator.Send(command));
+            return HandleResult(await _mediator.Send(command));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id) => Ok(await _mediator.Send(new DeleteClassCommand(id)));
     }
 }
+

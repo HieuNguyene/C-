@@ -13,7 +13,13 @@ namespace W4.Application.Features.Students.Commands
         public string Name { get; set; } = string.Empty;
         public DateTime Dob { get; set; }
         public GenderType Gender { get; set; }
-        public string? ClassId { get; set; }
+
+        private string? _classId;
+        public string? ClassId 
+        { 
+            get => _classId; 
+            set => _classId = string.IsNullOrWhiteSpace(value) ? null : value; 
+        }
     }
 
     public class UpdateStudentHandler : IRequestHandler<UpdateStudentCommand, ApiResponse<bool>>

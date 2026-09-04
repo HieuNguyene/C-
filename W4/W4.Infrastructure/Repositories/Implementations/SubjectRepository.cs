@@ -1,3 +1,5 @@
+using System.Data;
+using Dapper;
 using W4.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using W4.Infrastructure.Data;
@@ -8,10 +10,12 @@ namespace W4.Infrastructure.Repositories.Implementations
     public class SubjectRepository : ISubjectRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly IDbConnection _dbConnection;
 
-        public SubjectRepository(ApplicationDbContext context)
+        public SubjectRepository(ApplicationDbContext context, IDbConnection dbConnection)
         {
             _context = context;
+            _dbConnection = dbConnection;
         }
 
         public async Task<Subject> CreateAsync(Subject subject)
@@ -23,20 +27,8 @@ namespace W4.Infrastructure.Repositories.Implementations
 
         public async Task<bool> DeleteAsync(string subjectId)
         {
-            // Sử dụng ExecuteDeleteAsync để tối ưu hiệu năng xóa
             int rowsDeleted = await _context.Subjects.Where(s => s.SubjectId == subjectId).ExecuteDeleteAsync();
             return rowsDeleted > 0;
-        }
-
-        public async Task<List<Subject>> GetAllAsync()
-        {
-            // Thêm AsNoTracking vì chỉ lấy ra để xem
-            return await _context.Subjects.AsNoTracking().ToListAsync();
-        }
-
-        public async Task<Subject?> GetByIdAsync(string subjectId)
-        {
-            return await _context.Subjects.FirstOrDefaultAsync(s => s.SubjectId == subjectId);
         }
 
         public async Task<bool> UpdateAsync(Subject subject)
@@ -45,16 +37,18 @@ namespace W4.Infrastructure.Repositories.Implementations
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<List<Subject>> GetAllAsync()
+        {
+            var sql = "SELECT * FROM Subjects";
+            var subjects = await _dbConnection.QueryAsync<Subject>(sql);
+            return subjects.ToList();
+        }
+
+        public async Task<Subject?> GetByIdAsync(string subjectId)
+        {
+            var sql = "SELECT * FROM Subjects WHERE SubjectId = @SubjectId";
+            return await _dbConnection.QueryFirstOrDefaultAsync<Subject>(sql, new { SubjectId = subjectId });
+        }
     }
 }
-
-
-
-
-
-
-
-
-
-
-

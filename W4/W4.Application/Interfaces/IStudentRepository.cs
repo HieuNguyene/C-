@@ -11,6 +11,7 @@ namespace W4.Application.Interfaces
         Task<List<Student>> GetStudentByKeyWordAsync(string? keyword, int pageSize, int pageNumber);
         Task<Student> UpdateAsync(Student newStudent);
         Task<bool> DeleteByIdAsync(Guid id);
+        Task<List<Student>> GetStudentsByClassIdAsync(string classId);
     }
 }
 

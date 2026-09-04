@@ -13,7 +13,7 @@ namespace W4.API.Controllers
 {
     [Route("api/student")]
     [ApiController]
-    public class StudentController : ControllerBase
+    public class StudentController : ApiControllerBase
     {
         private readonly MediatR.IMediator _mediator;
         public StudentController(MediatR.IMediator mediator)
@@ -24,39 +24,48 @@ namespace W4.API.Controllers
         public async Task<IActionResult> GetByKeyWordAsync([FromQuery] GetStudentByKeyWordQuery query)
         {
             var response = await _mediator.Send(query);
-            return Ok(response);
+            return HandleResult(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] CreateStudentCommand command)
         {
             var student = await _mediator.Send(command);
-            return Ok(student);
+            return HandleResult(student);
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
             var query = new GetStudentByIdQuery(id);
             var result = await _mediator.Send(query);
-            return Ok(result);
+            return HandleResult(result);
 
+        }
+        [HttpGet("class/{classId}")]
+        public async Task<IActionResult> GetStudentsByClassIdAsync(string classId)
+        {
+            var query = new GetStudentsByClassIdQuery(classId);
+            var result = await _mediator.Send(query);
+            return HandleResult(result);
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] UpdateStudentCommand command)
         {
             command.Id = id;
             var result = await _mediator.Send(command);
-            return Ok(result);
+            return HandleResult(result);
         }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteById(Guid id)
         {
             var command = new DeleteStudentCommand(id);
             var result = await _mediator.Send(command);
-            return Ok(result);
+            return HandleResult(result);
         }
     }
 }
+
 
 
 

@@ -1,10 +1,8 @@
-using W4.Application.DTOs;
-using W4.Application.Validations;
-using W4.Application.Interfaces;
 using System;
-namespace W4.Application.DTOs
+
+namespace W4.Application.DTOs.Responses
 {
-    public class CreateScoreRequest
+    public class ScoreResponse
     {
         public Guid Id { get; set; }
         public float Value { get; set; }
@@ -12,10 +10,3 @@ namespace W4.Application.DTOs
         public string SubjectId { get; set; } = string.Empty;
     }
 }
-
-
-
-
-
-
-

@@ -10,13 +10,6 @@ namespace W4.Application.Features.Students.Queries
         public string? Keyword { get; set; }
         public int PageSize { get; set; } = 10;
         public int Page { get; set; } = 1;
-
-        public GetStudentByKeyWordQuery(string keyWord, int pageSize, int pageNumber)
-        {
-            Keyword = keyWord;
-            PageSize = pageSize;
-            Page = pageNumber;
-        }
     }
     public class GetStudentByKeywordQueryHandler : IRequestHandler<GetStudentByKeyWordQuery, ApiResponse<List<StudentResponse>>>
     {

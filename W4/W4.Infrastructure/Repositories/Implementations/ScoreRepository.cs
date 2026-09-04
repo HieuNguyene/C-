@@ -2,15 +2,19 @@ using W4.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using W4.Infrastructure.Data;
 using W4.Domain.Entities;
+using System.Data;
+using Dapper;
 
 namespace W4.Infrastructure.Repositories.Implementations
 {
     public class ScoreRepository : IScoreRepository
     {
         private readonly ApplicationDbContext _context;
-        public ScoreRepository(ApplicationDbContext context)
+        private readonly IDbConnection _dbconnection;
+        public ScoreRepository(ApplicationDbContext context, IDbConnection dbConnection)
         {
             _context = context;
+            _dbconnection = dbConnection;
         }
 
         public async Task<Score> CreateAsync(Score score)
@@ -30,24 +34,29 @@ namespace W4.Infrastructure.Repositories.Implementations
 
         public async Task<Score?> GetByIdAsync(Guid id)
         {
-            return await _context.Scores.FirstOrDefaultAsync(sc => sc.Id == id);
+            var sql = "SELECT * FROM Scores WHERE Id = @id";
+            return await _dbconnection.QueryFirstOrDefaultAsync<Score>(sql, new { Id = id });
         }
 
         public async Task<List<Score>> GetScoreBySubjectAsync(string subjectId)
         {
-            // Tối ưu: Dùng AsNoTracking cho các truy vấn chỉ để ĐỌC (Tăng tốc độ)
-            return await _context.Scores.AsNoTracking().Where(sc => sc.SubjectId == subjectId).ToListAsync();
+
+            var sql = "SELECT * FROM Scores WHERE SubjectId = @subjectId";
+            var scores = await _dbconnection.QueryAsync<Score>(sql, new { SubjectId = subjectId });
+            return scores.ToList();
         }
 
         public async Task<List<Score>> GetScoresByStudentAsync(Guid studentId)
         {
-            // Tối ưu: Dùng AsNoTracking cho các truy vấn chỉ để ĐỌC (Tăng tốc độ)
-            return await _context.Scores.AsNoTracking().Where(sc => sc.StudentId == studentId).ToListAsync();
+            var sql = "SELECT * FROM Scores WHERE StudentId = @studentId";
+            var scores = await _dbconnection.QueryAsync<Score>(sql, new { StudentId = studentId });
+            return scores.ToList();
         }
 
         public async Task<Score?> GetSpecificScoreAsync(Guid studentId, string subjectId)
         {
-            return await _context.Scores.FirstOrDefaultAsync(sc => sc.StudentId == studentId && sc.SubjectId == subjectId);
+            var sql = "SELECT * FROM Scores WHERE StudentId = @studentId AND SubjectId = @subjectId";
+            return await _dbconnection.QueryFirstOrDefaultAsync<Score>(sql, new { StudentId = studentId, SubjectId = subjectId });
         }
 
         public async Task<bool> UpdateAsync(Score score)

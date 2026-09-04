@@ -1,4 +1,9 @@
 using W4.Application.DTOs;
+using W4.Application.Features.Classes.Commands;
+using W4.Application.Features.Students.Commands;
+using W4.Application.Features.Subjects.Commands;
+using W4.Application.Features.Scores.Commands;
+using W4.Application.Features.Students.Queries;
 using W4.Application.Validations;
 using W4.Application.Interfaces;
 using FluentValidation;
@@ -6,7 +11,7 @@ using FluentValidation;
 
 namespace W4.Application.Validations
 {
-    public class UpdateStudentValidator : AbstractValidator<UpdateStudentRequest>
+    public class UpdateStudentValidator : AbstractValidator<UpdateStudentCommand>
     {
         public UpdateStudentValidator()
         {
@@ -24,6 +29,7 @@ namespace W4.Application.Validations
         }
     }
 }
+
 
 
 

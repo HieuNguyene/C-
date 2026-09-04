@@ -1,12 +1,16 @@
 using W4.Application.DTOs;
+using W4.Application.Features.Classes.Commands;
+using W4.Application.Features.Students.Commands;
+using W4.Application.Features.Subjects.Commands;
+using W4.Application.Features.Scores.Commands;
+using W4.Application.Features.Students.Queries;
 using W4.Application.Validations;
 using W4.Application.Interfaces;
 using FluentValidation;
-using W4.Application.DTOs;
 
 namespace W4.Application.Validations
 {
-    public class CreateClassValidator : AbstractValidator<CreateClassRequest>
+    public class CreateClassValidator : AbstractValidator<CreateClassCommand>
     {
         public CreateClassValidator()
         {
@@ -23,6 +27,7 @@ namespace W4.Application.Validations
         }
     }
 }
+
 
 
 

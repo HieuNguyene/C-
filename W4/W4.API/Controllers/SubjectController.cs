@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using W4.Application.Features.Subjects.Commands;
 using W4.Application.Features.Subjects.Queries;
+using Microsoft.AspNetCore.Authorization;
 
 namespace W4.API.Controllers
 {
+    [Authorize]
     [Route("api/subject")]
     [ApiController]
     public class SubjectController : ApiControllerBase

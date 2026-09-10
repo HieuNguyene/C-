@@ -6,6 +6,8 @@ using W4.Infrastructure.Repositories.Implementations;
 using W4.Application.Behaviors;
 using FluentValidation;
 using MediatR;
+using AutoMapper;
+using W4.Infrastructure.Services;
 
 namespace W4.API.Extensions
 {
@@ -21,6 +23,8 @@ namespace W4.API.Extensions
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(applicationAssembly));
+
+            services.AddAutoMapper(cfg => cfg.AddMaps(applicationAssembly));
             return services;
         }
 
@@ -30,6 +34,9 @@ namespace W4.API.Extensions
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<ISubjectRepository, SubjectRepository>();
             services.AddScoped<IScoreRepository, ScoreRepository>();
+            services.AddScoped<ITokenService,TokenService>();
+            services.AddScoped<IPasswordHasher, PasswordHasher>();
+            services.AddScoped<IUserRepository, UserRepository>();
             return services;
         }
     }

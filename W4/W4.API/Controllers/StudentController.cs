@@ -9,8 +9,10 @@ using W4.Domain.Entities;
 
 using W4.Application.Features.Students.Commands;
 using W4.Application.Features.Students.Queries;
+using Microsoft.AspNetCore.Authorization;
 namespace W4.API.Controllers
 {
+    [Authorize]
     [Route("api/student")]
     [ApiController]
     public class StudentController : ApiControllerBase

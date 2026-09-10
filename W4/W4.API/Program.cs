@@ -12,6 +12,11 @@ using W4.API.Middlewares;
 using W4.Infrastructure.Repositories.Implementations;
 using W4.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using W4.Infrastructure.Services;
+using W4.Application.Common;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace W4.API
 {
@@ -22,9 +27,35 @@ namespace W4.API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            // Cấu hình JWT
+            builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
+            var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
+            builder.Services.AddAuthentication(options =>
+            {
+                 // Báo cho Server: "Mặc định hãy tìm và kiểm tra thẻ JWT Bearer"
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; // Khi có API đến tìm thẻ JWT 
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;// Nếu ko có hay hết hạn thì đẩy lỗi 401 
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings!.Key)),// Tạo một khóa đối xứng rồi truyền key đã chuyển sang dạng byte
+
+                    ValidateIssuer = true,
+                    ValidIssuer = jwtSettings.Issuer, // Kiểm tra xem có đúng nơi phát hành không
+
+                    ValidateAudience = true,
+                    ValidAudience = jwtSettings.Audience, // Kiểm tra xem có đúng người sử dụng không
+
+                    // Kiểm tra hết hạn dùng: Quá 10p từ chối lập tức 
+                    ValidateLifetime =true,
+                    ClockSkew = TimeSpan.Zero  //Hết hạn đúng từng giây, không cho trễ   
+                };
+            });
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddApplicationServices();
@@ -50,11 +81,13 @@ namespace W4.API
                 app.UseSwaggerUI();
             }
 
+
+
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseMiddleware<LoggingMiddleware>();
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

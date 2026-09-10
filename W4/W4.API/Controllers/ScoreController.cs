@@ -3,9 +3,11 @@ using MediatR;
 using System;
 using W4.Application.Features.Scores.Commands;
 using W4.Application.Features.Scores.Queries;
+using Microsoft.AspNetCore.Authorization;
 
 namespace W4.API.Controllers
 {
+    [Authorize]
     [Route("api/score")]
     [ApiController]
     public class ScoreController : ApiControllerBase

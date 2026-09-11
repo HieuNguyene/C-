@@ -11,10 +11,12 @@ TestResults/
 # ==============================================================================
 # BỎ QUA CÁC FILE CẤU HÌNH CỤC BỘ / MẬT KHẨU (BẢO MẬT)
 # ==============================================================================
-# Không đẩy cấu hình Development hoặc Local lên Git để tránh lộ chuỗi kết nối DB
-appsettings.Development.json
-appsettings.local.json
+# Không đẩy cấu hình Development, Local hoặc appsettings chứa Secret lên Git
+**/appsettings.json
+**/appsettings.Development.json
+**/appsettings.local.json
 secrets.json
+!**/appsettings.Example.json
 
 # ==============================================================================
 # BỎ QUA CÁC FILE/THƯ MỤC CỦA CÁC IDE (MÔI TRƯỜNG LẬP TRÌNH)

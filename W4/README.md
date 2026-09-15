@@ -1,178 +1,278 @@
-﻿# 🎓 W4 - Advanced Student Management API
+# 🎓 W4 - Advanced Student Management API
 
-Một dự án **ASP.NET Core Web API** chuyên sâu dành cho quản lý học sinh. Dự án này được thiết kế dựa trên mô hình **Clean Architecture (4 Tầng)**, bóc tách hoàn toàn logic nghiệp vụ (Business Logic) khỏi tầng giao diện (API) và tầng truy cập dữ liệu (Database).
-
-Dự án áp dụng các pattern và nguyên tắc thiết kế hiện đại như **Repository Pattern**, **Service Pattern**, **Dependency Injection**, **FluentValidation**, và **Global Exception Handling**.
+Một dự án **ASP.NET Core 8 Web API** chuyên sâu dành cho hệ thống quản lý học sinh và trường học. Dự án được thiết kế chuẩn mực theo mô hình **Clean Architecture (4 Tầng)** kết hợp **CQRS (MediatR)**, **AutoMapper**, **FluentValidation**, và hệ thống bảo mật toàn diện bằng **JWT Authentication** cùng cơ chế **Refresh Token Rotation (Xoay vòng token)** và **Phân quyền đa cấp (Role & Policy Authorization)**.
 
 ---
 
 ## 🚀 Công nghệ & Thư viện sử dụng
 
-- **Framework:** ASP.NET Core 8 Web API
+- **Framework:** ASP.NET Core 8.0 Web API (.NET 8)
 - **Ngôn ngữ:** C# 12
-- **Cơ sở dữ liệu (Database):** SQL Server
-- **ORM:** Entity Framework Core 8
-- **Xác thực dữ liệu (Validation):** FluentValidation
-- **Tài liệu API (API Documentation):** Swagger / OpenAPI
-- **Kiến trúc:** Clean Architecture (4-Layer Solution)
+- **Cơ sở dữ liệu:** SQL Server (LocalDB / SQL Server Express)
+- **ORM & Data Access:** Entity Framework Core 8.0 & Dapper
+- **Kiến trúc:** Clean Architecture (4 Projects) + CQRS Pattern (MediatR)
+- **Object Mapping:** AutoMapper
+- **Validation:** FluentValidation (Tự động validate Model)
+- **Xác thực & Bảo mật:** JWT Bearer, PBKDF2 Password Hashing, Refresh Token
+- **Tài liệu API:** Swagger UI (Tích hợp nút ổ khóa Bearer Authorization)
 
 ---
 
-## 📂 Chi tiết cấu trúc dự án (Mô hình 4 Tầng)
-
-Dự án được chia làm 4 dự án nhỏ (`.csproj`) giúp cách ly hoàn toàn các chức năng, đảm bảo mã nguồn dễ bảo trì, dễ thay thế và dễ test.
+## 📂 Cấu trúc dự án (Mô hình Clean Architecture)
 
 ```text
 📦 W4.slnx
- ┣ 📂 W4.API                   <-- TẦNG 1: GIAO DIỆN & CẤU HÌNH (Presentation Layer)
- ┃ ┣ 📂 Controllers          : Nhận HTTP Requests từ Client, kiểm tra và gọi Service, sau đó trả về HTTP Responses.
- ┃ ┣ 📂 Middlewares          : Xử lý ngoại lệ toàn cầu (Bắt lỗi tự động và trả về JSON chuẩn).
- ┃ ┣ 📂 Extensions           : Chứa cấu hình Dependency Injection (DI).
- ┃ ┣ 📜 Program.cs           : Entry point - Nơi khởi chạy ứng dụng.
- ┃ ┗ 📜 appsettings.json     : Lưu trữ chuỗi kết nối Database.
+ ┣ 📂 W4.API                   <-- TẦNG 1: PRESENTATION LAYER
+ ┃ ┣ 📂 Controllers          : Nhận HTTP Requests, phân quyền [Authorize], gọi MediatR.
+ ┃ ┣ 📂 Middlewares          : Bắt lỗi toàn cục (ExceptionMiddleware), ghi nhật ký (LoggingMiddleware).
+ ┃ ┣ 📂 Extensions           : Đăng ký Dependency Injection (DI) tập trung.
+ ┃ ┣ 📜 Program.cs           : Cấu hình Pipeline, JWT Bearer, Policy Authorization & Swagger.
+ ┃ ┗ 📜 appsettings.json     : Lưu ConnectionString và cấu hình Secret Key cho JWT.
  ┃
- ┣ 📂 W4.Application           <-- TẦNG 2: NGHIỆP VỤ (Business Logic Layer)
- ┃ ┣ 📂 DTOs                 : (Data Transfer Objects) Đóng gói dữ liệu gửi/nhận (Requests/Responses).
- ┃ ┣ 📂 Validations          : Luật kiểm tra dữ liệu bằng FluentValidation (VD: Tên không rỗng).
- ┃ ┣ 📂 Interfaces           : Giao diện cho Service (VD: IStudentService).
- ┃ ┗ 📂 Implementations      : Triển khai chi tiết logic nghiệp vụ.
+ ┣ 📂 W4.Application           <-- TẦNG 2: BUSINESS LOGIC & CQRS LAYER
+ ┃ ┣ 📂 Common               : Cấu hình hệ thống (JwtSettings).
+ ┃ ┣ 📂 DTOs                 : Requests và Responses chuyển tải dữ liệu.
+ ┃ ┣ 📂 Features             : Tổ chức nghiệp vụ theo chuẩn CQRS:
+ ┃ ┃ ┣ 📂 Auth               : Commands cho Register, Login, RefreshToken, RevokeToken.
+ ┃ ┃ ┣ 📂 Students           : Commands (Thêm, Sửa, Xóa) & Queries (Tìm kiếm, Xem chi tiết).
+ ┃ ┃ ┣ 📂 Classes            : Commands & Queries quản lý lớp học.
+ ┃ ┃ ┣ 📂 Subjects           : Commands & Queries quản lý môn học.
+ ┃ ┃ ┗ 📂 Scores             : Commands & Queries quản lý điểm số.
+ ┃ ┣ 📂 Interfaces           : Giao diện ITokenService, IPasswordHasher, IUserRepository...
+ ┃ ┣ 📂 Mappings             : Profiles AutoMapper (StudentProfile, ClassProfile...).
+ ┃ ┗ 📂 Validations          : Các bộ luật kiểm tra dữ liệu bằng FluentValidation.
  ┃
- ┣ 📂 W4.Infrastructure        <-- TẦNG 3: HẠ TẦNG & TRUY CẬP DỮ LIỆU (Data Access Layer)
- ┃ ┣ 📂 Data                 : Chứa `ApplicationDbContext` (Cấu hình EF Core).
- ┃ ┣ 📂 Repositories         : Nơi duy nhất chứa các câu lệnh truy vấn dữ liệu (LINQ, EF Core).
- ┃ ┃ ┣ 📂 Interfaces         : Giao diện Repository (VD: IStudentRepository).
- ┃ ┃ ┗ 📂 Implementations    : Triển khai gọi Database.
- ┃ ┗ 📂 Migrations           : Lịch sử thay đổi Schema CSDL.
+ ┣ 📂 W4.Infrastructure        <-- TẦNG 3: DATA ACCESS & INFRASTRUCTURE LAYER
+ ┃ ┣ 📂 Data                 : ApplicationDbContext (EF Core nối SQL Server).
+ ┃ ┣ 📂 Repositories         : Triển khai các Repository truy xuất DB.
+ ┃ ┣ 📂 Services             : Triển khai TokenService (JWT), PasswordHasher (PBKDF2).
+ ┃ ┗ 📂 Migrations           : Lịch sử tiến hóa Database (EF Core Migrations).
  ┃
- ┗ 📂 W4.Domain                <-- TẦNG 4: THỰC THỂ CỐT LÕI (Domain Layer)
-   ┣ 📂 Entities             : Các class đại diện cho bảng CSDL (Student, Class...).
-   ┗ 📂 Enums                : Các tập hợp hằng số (VD: GenderType).
+ ┗ 📂 W4.Domain                <-- TẦNG 4: DOMAIN LAYER (CỐT LÕI)
+   ┣ 📂 Entities             : Các thực thể trung tâm (User, RefreshToken, Student, Class, Subject, Score).
+   ┗ 📂 Enums                : GenderType, RoleType...
 ```
 
 ---
 
-## 🔄 Cách thức hoạt động (Luồng xử lý dữ liệu)
+## ⚙️ Cấu hình Hệ thống (`appsettings.json`)
 
-Mọi thao tác của người dùng (ví dụ: **Thêm học sinh mới**) đều đi qua một luồng chặt chẽ theo chiều từ ngoài vào trong:
+Mở file `W4.API/appsettings.json` và cấu hình chuỗi kết nối và thông số JWT:
 
-1. **Client** gửi yêu cầu POST `/api/students` kèm dữ liệu JSON.
-2. **Controller** nhận Request. Dữ liệu đi qua **FluentValidation** để kiểm tra tính hợp lệ. 
-3. Nếu hợp lệ, Controller gọi **StudentService** (Application) và truyền DTO vào.
-4. **Service** xử lý nghiệp vụ, chuyển DTO thành Entity `Student`, sau đó gọi **StudentRepository**.
-5. **Repository** dùng EF Core tạo lệnh `INSERT` và lưu xuống SQL Server.
-6. Dữ liệu lưu thành công, Repository trả Entity về cho Service. Service chuyển thành DTO Response.
-7. **Controller** gói dữ liệu vào `ApiResponse` và gửi HTTP `201 Created` cho Client.
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=YOUR_SERVER_NAME;Database=StudentManagement;Trusted_Connection=True;MultipleActiveResultSets=true;Encrypt=False"
+  },
+  "Jwt": {
+    "Key": "ChuoiKhoaBiMatToiThieu256BitRatDaiDungDeKyChuKyDienTuHMACSHA256",
+    "Issuer": "W4.API",
+    "Audience": "W4.Client",
+    "DurationInMinutes": 15
+  }
+}
+```
 
----
-
-## 🛠 Hướng dẫn Cài đặt & Sử dụng
-
-### 1. Yêu cầu hệ thống
-- Tải và cài đặt **.NET 8 SDK**.
-- Tải và cài đặt **SQL Server** (hoặc dùng SQL Server Express / LocalDB).
-
-### 2. Thiết lập cơ sở dữ liệu
-1. Mở file `W4.API/appsettings.json` và cập nhật mục `DefaultConnection` sao cho trỏ đúng vào SQL Server của bạn.
-   ```json
-   "ConnectionStrings": {
-     "DefaultConnection": "Server=TÊN_SERVER_CỦA_BẠN;Database=W4_StudentDb;Trusted_Connection=True;MultipleActiveResultSets=true;Encrypt=False"
-   }
-   ```
-2. Mở Terminal tại thư mục `W4.API` và chạy lệnh tạo Database:
+### Các bước khởi tạo Database:
+1. Mở Terminal tại thư mục `W4.API`:
    ```bash
-   dotnet ef database update
+   dotnet ef database update --project ../W4.Infrastructure --startup-project .
    ```
-3. (Tùy chọn): Bạn có thể chạy script `seed.sql` trong SQL Server Management Studio (SSMS) để nạp sẵn dữ liệu mẫu.
-
-### 3. Chạy ứng dụng
-Mở Terminal tại thư mục gốc và gõ lệnh:
-```bash
-dotnet run --project W4.API/W4.API.csproj
-```
-Khi ứng dụng khởi chạy thành công, đường link `https://localhost:<port>` sẽ xuất hiện.
+2. Khởi chạy ứng dụng:
+   ```bash
+   dotnet run --project W4.API
+   ```
+3. Truy cập Swagger UI: **`https://localhost:62182/swagger`** *(hoặc `http://localhost:62183/swagger`)*.
 
 ---
 
-## 🧪 Hướng dẫn Test API (Swagger / Postman)
+## 🔐 Hệ thống Xác thực & Phân quyền (Auth & Authorization)
 
-Dưới đây là danh sách đầy đủ các **Endpoints** của dự án. Bạn có thể sử dụng giao diện **Swagger** tích hợp sẵn tại `https://localhost:<port>/swagger` hoặc tạo mới Collection trong **Postman** để test.
-
-### 🏫 1. Class API (Quản lý Lớp học)
-- **`GET /api/Class`**: Lấy danh sách tất cả các lớp.
-- **`GET /api/Class/{id}`**: Lấy thông tin chi tiết một lớp bằng ID.
-- **`POST /api/Class`**: Tạo lớp học mới.
-  - **Body (JSON):**
-    ```json
-    {
-      "name": "12A1",
-      "homeRoomTeacher": "Nguyễn Văn A"
-    }
-    ```
-- **`PUT /api/Class/{id}`**: Sửa thông tin lớp học.
-- **`DELETE /api/Class/{id}`**: Xóa một lớp học.
-
-### 👨‍🎓 2. Student API (Quản lý Học sinh)
-- **`GET /api/Student/search`**: Tìm kiếm và phân trang học sinh.
-  - **Params:** `keyword` (Tên học sinh), `pageNumber` (Trang số mấy), `pageSize` (Bao nhiêu dòng 1 trang).
-- **`GET /api/Student/{id}`**: Xem chi tiết 1 học sinh bằng ID.
-- **`POST /api/Student`**: Thêm một học sinh mới.
-  - **Body (JSON):**
-    ```json
-    {
-      "name": "Trần Thị B",
-      "dateOfBirth": "2005-08-15T00:00:00Z",
-      "gender": 2, 
-      "classId": "DÁN_ID_LỚP_HỌC_VÀO_ĐÂY"
-    }
-    ```
-    *(Enum Gender: 1=Nam, 2=Nữ, 3=Khác. `classId` có thể bỏ null)*
-- **`PUT /api/Student/{id}`**: Sửa thông tin học sinh.
-- **`DELETE /api/Student/{id}`**: Xóa học sinh khỏi hệ thống.
-
-### 📚 3. Subject API (Quản lý Môn học)
-- **`GET /api/Subject`**: Xem danh sách môn học.
-- **`GET /api/Subject/{id}`**: Lấy thông tin 1 môn học.
-- **`POST /api/Subject`**: Tạo môn học mới.
-  - **Body (JSON):**
-    ```json
-    {
-      "name": "Toán Học",
-      "credits": 3
-    }
-    ```
-- **`PUT /api/Subject/{id}`**: Cập nhật thông tin môn học.
-- **`DELETE /api/Subject/{id}`**: Xóa môn học.
-
-### 📝 4. Score API (Quản lý Điểm số)
-- **`GET /api/Score/student/{studentId}`**: Lấy toàn bộ bảng điểm của 1 học sinh cụ thể.
-- **`POST /api/Score`**: Chấm điểm môn học cho một học sinh.
-  - **Body (JSON):**
-    ```json
-    {
-      "studentId": "DÁN_ID_HỌC_SINH_VÀO_ĐÂY",
-      "subjectId": "DÁN_ID_MÔN_HỌC_VÀO_ĐÂY",
-      "scoreValue": 9.5
-    }
-    ```
-- **`PUT /api/Score/{id}`**: Sửa lại điểm số đã chấm.
-  - **Body (JSON):**
-    ```json
-    {
-      "scoreValue": 10
-    }
-    ```
-- **`DELETE /api/Score/{id}`**: Xóa một cột điểm.
-
-### ⚠️ Một số mã lỗi HTTP (Status Codes) thường gặp:
-- **`200 OK` / `201 Created`**: Gọi API thành công.
-- **`400 Bad Request`**: Dữ liệu gửi lên sai định dạng (VD: bỏ trống tên, tuổi âm...). Lỗi này do FluentValidation bắt.
-- **`404 Not Found`**: ID truy vấn không tồn tại.
-- **`500 Internal Server Error`**: Lỗi hệ thống bất ngờ.
+### 1. Cơ chế hoạt động
+- **Bảo vệ Mật khẩu:** Sử dụng thuật toán **PBKDF2 (SHA-256)** với 10,000 vòng lặp kết hợp 16 bytes muối ngẫu nhiên (`Salt`). So khớp mật khẩu bằng `CryptographicOperations.FixedTimeEquals` chống tấn công đo thời gian (Timing Attack).
+- **Access Token:** Định dạng JWT có chữ ký điện tử HMAC-SHA256, thời gian sống ngắn (**15 phút**), mang theo các Claims (`sub`, `unique_name`, `role`, `jti`).
+- **Refresh Token Rotation:** Chuỗi ngẫu nhiên 64-bytes lưu trong Database (hạn **7 ngày**). Khi đổi token mới, token cũ bị hủy ngay lập tức (`IsUsed = true`) và cấp phát cặp token mới để chống đánh cắp token (Replay Attack).
+- **Thu hồi (Revoke / Logout):** Đổi cờ `IsRevoked = true` để vô hiệu hóa phiên làm việc.
 
 ---
 
-## 💡 Tại sao lại dùng Clean Architecture?
+### 2. Bảng Ma trận Phân quyền toàn hệ thống
 
-- **Dễ bảo trì:** Mỗi tầng làm đúng một việc (Single Responsibility). Nếu muốn đổi Database từ SQL Server sang MySQL, bạn chỉ cần sửa ở tầng Infrastructure mà không làm ảnh hưởng tầng Application hay API.
-- **Bảo mật:** Tránh bộc lộ cấu trúc Database ra ngoài Internet nhờ kỹ thuật "Che giấu Entity" bằng các DTOs.
-- **An toàn:** Controller mỏng dính giúp tránh lỗi. Toàn bộ tính toán nguy hiểm đều nằm ở tầng Application, dễ dàng bắt lỗi tập trung.
+Toàn bộ hệ thống được phân quyền nghiêm ngặt dựa trên **Roles** và **Policies**:
+
+| Phân hệ | Endpoint | Method | Phân quyền áp dụng | Quyền hạn thực tế |
+| :--- | :--- | :---: | :--- | :--- |
+| **Auth** | `/api/auth/*` | POST | `[AllowAnonymous]` | 🌐 Mọi người (Kể cả khách chưa đăng nhập) |
+| **Sinh viên** | `/api/student` | POST | `[Authorize(Policy = "AdminOnly")]` | 👑 **Chỉ duy nhất Admin** mới được thêm |
+| | `/api/student/{id}` | DELETE | `[Authorize(Policy = "AdminOnly")]` | 👑 **Chỉ duy nhất Admin** mới được xóa |
+| | `/api/student/{id}` | PUT | `[Authorize(Policy = "CanManageStudents")]` | 👑 **Admin** & 👨‍🏫 **Teacher** được cập nhật |
+| | `/api/student/search` | GET | `[Authorize(Policy = "CanManageStudents")]` | 👑 **Admin** & 👨‍🏫 **Teacher** được tìm kiếm |
+| | `/api/student/{id}` | GET | `[Authorize(Policy = "CanManageStudents")]` | 👑 **Admin** & 👨‍🏫 **Teacher** được xem chi tiết |
+| | `/api/student/class/{id}`| GET | `[Authorize(Policy = "CanManageStudents")]` | 👑 **Admin** & 👨‍🏫 **Teacher** xem theo lớp |
+| **Lớp học** | `/api/class` | GET | `[Authorize]` | 👥 Mọi tài khoản đăng nhập đều xem được |
+| | `/api/class/{id}` | GET | `[Authorize]` | 👥 Mọi tài khoản đăng nhập đều xem được |
+| | `/api/class` | POST/PUT/DELETE | `[Authorize(Policy = "AdminOnly")]` | 👑 **Chỉ Admin** được Thêm/Sửa/Xóa lớp |
+| **Môn học** | `/api/subject` | GET | `[Authorize]` | 👥 Mọi tài khoản đăng nhập đều xem được |
+| | `/api/subject` | POST/PUT/DELETE | `[Authorize(Policy = "AdminOnly")]` | 👑 **Chỉ Admin** được Thêm/Sửa/Xóa môn |
+| **Điểm số** | `/api/score/{id}` | GET | `[Authorize]` | 👥 Mọi tài khoản đăng nhập đều xem được |
+| | `/api/score` | POST/PUT | `[Authorize(Policy = "CanManageStudents")]` | 👑 **Admin** & 👨‍🏫 **Teacher** (Nhập/Sửa điểm) |
+| | `/api/score/{id}` | DELETE | `[Authorize(Policy = "AdminOnly")]` | 👑 **Chỉ Admin** (Xóa cột điểm) |
+
+---
+
+## 🧪 Chi tiết các API Endpoints
+
+### 🔑 1. Nhóm Xác thực (`/api/auth`)
+
+#### a. Đăng ký tài khoản: `POST /api/auth/register`
+* **Request Body:**
+  ```json
+  {
+    "username": "admin_hieu",
+    "password": "Password123@",
+    "email": "admin@school.edu.vn",
+    "role": "Admin"
+  }
+  ```
+  *(Role hỗ trợ: `"Admin"`, `"Teacher"`, `"User"`)*
+
+#### b. Đăng nhập: `POST /api/auth/login`
+* **Request Body:**
+  ```json
+  {
+    "username": "admin_hieu",
+    "password": "Password123@"
+  }
+  ```
+* **Response (200 OK):**
+  ```json
+  {
+    "success": true,
+    "message": "Đăng nhập thành công!",
+    "data": {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+      "refreshToken": "k7Jq8mZ1N9...rX4vP0L2w==",
+      "username": "admin_hieu",
+      "role": "Admin"
+    }
+  }
+  ```
+
+#### c. Làm mới Token: `POST /api/auth/refresh-token`
+* **Request Body:**
+  ```json
+  {
+    "accessToken": "chuỗi_access_token_vừa_hết_hạn",
+    "refreshToken": "k7Jq8mZ1N9...rX4vP0L2w=="
+  }
+  ```
+
+#### d. Thu hồi Token (Đăng xuất): `POST /api/auth/revoke-token`
+* **Request Body:**
+  ```json
+  {
+    "refreshToken": "k7Jq8mZ1N9...rX4vP0L2w=="
+  }
+  ```
+
+---
+
+### 👨‍🎓 2. Nhóm Sinh viên (`/api/student`)
+- **`GET /api/student/search?keyword=Hieu&pageNumber=1&pageSize=10`**: Tìm kiếm và phân trang sinh viên.
+- **`GET /api/student/{id}`**: Xem chi tiết 1 sinh viên.
+- **`GET /api/student/class/{classId}`**: Xem danh sách sinh viên theo lớp.
+- **`POST /api/student`**: Thêm sinh viên mới *(Chỉ Admin)*.
+  ```json
+  {
+    "name": "Nguyễn Minh Hiếu",
+    "dateOfBirth": "2002-05-20T00:00:00Z",
+    "gender": 1,
+    "classId": "GUID_HOAC_MA_LOP"
+  }
+  ```
+- **`PUT /api/student/{id}`**: Sửa thông tin sinh viên *(Admin hoặc Teacher)*.
+- **`DELETE /api/student/{id}`**: Xóa sinh viên *(Chỉ Admin)*.
+
+---
+
+### 🏫 3. Nhóm Lớp học (`/api/class`)
+- **`GET /api/class`**: Danh sách tất cả lớp học.
+- **`GET /api/class/{id}`**: Chi tiết lớp học.
+- **`POST /api/class`**: Tạo lớp mới *(Admin)*.
+  ```json
+  {
+    "name": "12A1",
+    "homeRoomTeacher": "Thầy Nguyễn Văn A"
+  }
+  ```
+- **`PUT /api/class/{id}`**: Sửa tên/giáo viên chủ nhiệm *(Admin)*.
+- **`DELETE /api/class/{id}`**: Xóa lớp học *(Admin)*.
+
+---
+
+### 📚 4. Nhóm Môn học (`/api/subject`)
+- **`GET /api/subject`**: Danh sách môn học.
+- **`POST /api/subject`**: Tạo môn học mới *(Admin)*.
+  ```json
+  {
+    "name": "Lập trình C# Nâng cao",
+    "credits": 3
+  }
+  ```
+- **`PUT /api/subject/{id}`**: Sửa thông tin môn *(Admin)*.
+- **`DELETE /api/subject/{id}`**: Xóa môn *(Admin)*.
+
+---
+
+### 📝 5. Nhóm Điểm số (`/api/score`)
+- **`GET /api/score/{id}`**: Xem điểm số theo ID.
+- **`POST /api/score`**: Chấm điểm cho sinh viên *(Admin hoặc Teacher)*.
+  ```json
+  {
+    "studentId": "GUID_SINH_VIEN",
+    "subjectId": "GUID_MON_HOC",
+    "scoreValue": 9.5
+  }
+  ```
+- **`PUT /api/score/{id}`**: Sửa điểm đã chấm *(Admin hoặc Teacher)*.
+- **`DELETE /api/score/{id}`**: Xóa điểm *(Chỉ Admin)*.
+
+---
+
+## 🎯 Hướng dẫn Kiểm thử trên Swagger UI (Nút Ổ Khóa 🔓)
+
+Dự án đã tích hợp sẵn cơ chế **OpenAPI Bearer Security** ngay trên giao diện Swagger:
+
+1. Chạy server bằng `dotnet run --project W4.API`.
+2. Mở trình duyệt vào link: `https://localhost:62182/swagger`.
+3. Gọi API `POST /api/auth/login` với tài khoản của bạn để lấy chuỗi `token`.
+4. Cuộn lên đầu trang, bấm vào nút màu xanh **`Authorize` 🔓** (góc trên bên phải).
+5. Dán token vào ô **Value** $\rightarrow$ Bấm nút **Authorize** $\rightarrow$ Bấm **Close**.
+6. Biểu tượng ổ khóa chuyển sang trạng thái đã khóa 🔒. Bây giờ bạn có thể thử nghiệm mọi API trực tiếp trên trình duyệt!
+
+---
+
+## 🧪 Kịch bản Test Phân quyền Thực tế
+
+Tạo 3 tài khoản qua `POST /api/auth/register` để kiểm tra phân quyền:
+- **Admin:** `admin_test` / `Admin@123` (Role: `Admin`)
+- **Giáo viên:** `teacher_test` / `Teacher@123` (Role: `Teacher`)
+- **Học sinh/Khách:** `user_test` / `User@123` (Role: `User`)
+
+| Tình huống Test | Token sử dụng | Kết quả quan sát được |
+| :--- | :--- | :--- |
+| **Không đăng nhập** | Không gửi Token | Bị chặn ngay từ cửa với mã **`401 Unauthorized`**. |
+| **User thường xóa sinh viên** | Token của `user_test` | Server biết danh tính nhưng từ chối với mã **`403 Forbidden`**. |
+| **Giáo viên sửa điểm** | Token của `teacher_test` | Thành công **`200 OK`**. |
+| **Giáo viên xóa sinh viên** | Token của `teacher_test` | Bị chặn với mã **`403 Forbidden`** (chỉ Admin mới được xóa). |
+| **Admin thực hiện mọi thao tác** | Token của `admin_test` | Toàn quyền Thêm, Sửa, Xóa thành công **`200 OK`**. |
+
+---
+
+## ⚠️ Bảng giải mã Status Codes
+- **`200 OK` / `201 Created`**: Thao tác thành công.
+- **`400 Bad Request`**: Dữ liệu gửi lên không đúng luật (do FluentValidation chặn lại).
+- **`401 Unauthorized`**: Chưa đăng nhập, token sai hoặc token hết hạn.
+- **`403 Forbidden`**: Đã đăng nhập nhưng không đủ quyền thực hiện hành động.
+- **`404 Not Found`**: Bản ghi cần tìm không tồn tại.
+- **`500 Internal Server Error`**: Lỗi hệ thống bất ngờ (bắt qua ExceptionMiddleware).

@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using W4.Application.Features.Auth.Commands.Login;
 using W4.Application.Features.Auth.Commands.RefreshToken;
@@ -7,6 +8,7 @@ using W4.Application.Features.Auth.Commands.RevokeToken;
 
 namespace W4.API.Controllers
 {
+    [AllowAnonymous]
     [Route("api/auth")]
     [ApiController]
     public class AuthController(IMediator mediator) : ApiControllerBase

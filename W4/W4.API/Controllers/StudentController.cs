@@ -23,6 +23,7 @@ namespace W4.API.Controllers
             _mediator = mediator;
         }
         [HttpGet("search")]
+        [Authorize(Policy = "CanManageStudents")]
         public async Task<IActionResult> GetByKeyWordAsync([FromQuery] GetStudentByKeyWordQuery query)
         {
             var response = await _mediator.Send(query);
@@ -30,12 +31,14 @@ namespace W4.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> CreateAsync([FromBody] CreateStudentCommand command)
         {
             var student = await _mediator.Send(command);
             return HandleResult(student);
         }
         [HttpGet("{id}")]
+        [Authorize(Policy = "CanManageStudents")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
             var query = new GetStudentByIdQuery(id);
@@ -44,6 +47,7 @@ namespace W4.API.Controllers
 
         }
         [HttpGet("class/{classId}")]
+        [Authorize(Policy = "CanManageStudents")]
         public async Task<IActionResult> GetStudentsByClassIdAsync(string classId)
         {
             var query = new GetStudentsByClassIdQuery(classId);
@@ -51,6 +55,7 @@ namespace W4.API.Controllers
             return HandleResult(result);
         }
         [HttpPut("{id}")]
+        [Authorize(Policy = "CanManageStudents")]
         public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] UpdateStudentCommand command)
         {
             command.Id = id;
@@ -59,6 +64,7 @@ namespace W4.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> DeleteById(Guid id)
         {
             var command = new DeleteStudentCommand(id);

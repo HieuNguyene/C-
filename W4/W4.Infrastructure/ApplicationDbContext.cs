@@ -14,6 +14,8 @@ namespace W4.Infrastructure.Data
         public DbSet<Subject> Subjects => Set<Subject>();
         public DbSet<Score> Scores => Set<Score>();
         public DbSet<Class> Classes => Set<Class>();
+        public DbSet<User> Users => Set<User>();
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
         public override int SaveChanges()
         {
@@ -76,7 +78,21 @@ namespace W4.Infrastructure.Data
                     .HasForeignKey(score => score.StudentId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
-
+            modelBuilder.Entity<RefreshToken>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.Token).IsRequired();
+                entity.Property(x => x.JwtId).IsRequired();
+                entity.Property(x => x.UserId).IsRequired();
+            });
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(u => u.Id);
+                entity.Property(u => u.Username).IsRequired().HasMaxLength(50);
+                entity.HasIndex(u => u.Username).IsUnique(); // Đảm bảo không trùng tên đăng nhập
+                entity.Property(u => u.PasswordHash).IsRequired();
+                entity.Property(u => u.Role).IsRequired().HasMaxLength(20);
+            });
         }
 
     }

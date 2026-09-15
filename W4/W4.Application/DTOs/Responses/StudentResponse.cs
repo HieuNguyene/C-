@@ -1,4 +1,4 @@
-﻿using W4.Domain.Enums;
+using W4.Domain.Enums;
 using System;
 namespace W4.Application.DTOs
 {
@@ -6,7 +6,7 @@ namespace W4.Application.DTOs
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public DateTime Dob { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public GenderType Gender { get; set; }
         public string? ClassId { get; set; }
     }

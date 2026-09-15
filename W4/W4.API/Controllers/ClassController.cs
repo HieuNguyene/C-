@@ -14,16 +14,20 @@ namespace W4.API.Controllers
         private readonly IMediator _mediator;
         public ClassController(IMediator mediator) => _mediator = mediator;
 
+        // Bất kỳ ai đã đăng nhập đều có thể xem danh sách lớp
         [HttpGet]
         public async Task<IActionResult> GetAll() => Ok(await _mediator.Send(new GetAllClassesQuery()));
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id) => Ok(await _mediator.Send(new GetClassByIdQuery(id)));
 
+        // Chỉ Admin mới được Thêm, Sửa, Xóa lớp học
         [HttpPost]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Create([FromBody] CreateClassCommand command) => Ok(await _mediator.Send(command));
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Update(string id, [FromBody] UpdateClassCommand command)
         {
             command.ClassId = id;
@@ -31,6 +35,7 @@ namespace W4.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Delete(string id) => Ok(await _mediator.Send(new DeleteClassCommand(id)));
     }
 }

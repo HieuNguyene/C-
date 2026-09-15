@@ -18,6 +18,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
+using Microsoft.OpenApi.Models;
+
 namespace W4.API
 {
     public class Program
@@ -55,11 +57,45 @@ namespace W4.API
                     ClockSkew = TimeSpan.Zero  //Hết hạn đúng từng giây, không cho trễ   
                 };
             });
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy =>
+                    policy.RequireRole("Admin"));
 
+                options.AddPolicy("CanManageStudents", policy =>
+                    policy.RequireRole("Admin","Teacher"));
+            });
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Nhập Access Token của bạn vào đây (Swagger sẽ tự thêm tiền tố Bearer)"
+                });
+
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
+            });
             builder.Services.AddApplicationServices();
             builder.Services.AddInfrastructureServices();
+            builder.Services.AddMemoryCache();
             builder.Services.AddValidatorsFromAssemblyContaining<CreateClassValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<CreateStudentValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<UpdateStudentValidator>();

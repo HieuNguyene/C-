@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using W4.Application.DTOs;
 using W4.Domain.Entities;
 using W4.Application.Interfaces;
+using AutoMapper;
 
 namespace W4.Application.Features.Students.Queries
 {
@@ -18,11 +19,13 @@ namespace W4.Application.Features.Students.Queries
     {
         private readonly ILogger<GetStudentByIdQueryHandler> _logger;
         private readonly IStudentRepository _repository;
+        private readonly IMapper _mapper;
 
-        public GetStudentByIdQueryHandler(ILogger<GetStudentByIdQueryHandler> logger, IStudentRepository repository)
+        public GetStudentByIdQueryHandler(ILogger<GetStudentByIdQueryHandler> logger, IStudentRepository repository,IMapper mapper)
         {
             _logger = logger;
             _repository = repository;
+            _mapper = mapper;
         }
         public async Task<ApiResponse<StudentResponse>> Handle(GetStudentByIdQuery request, CancellationToken cancellationToken)
         {
@@ -33,18 +36,12 @@ namespace W4.Application.Features.Students.Queries
                 _logger.LogWarning("Student not found. Id={Id}", request.Id);
                 throw new KeyNotFoundException("Student not found");
             }
+            var data = _mapper.Map<StudentResponse>(student);
             return new ApiResponse<StudentResponse>
             {
                 Success = true,
                 Message = "Success",
-                Data = new StudentResponse()
-                {
-                    Id = student.Id,
-                    Name = student.Name,
-                    Dob = student.DateOfBirth,
-                    Gender = student.Gender,
-                    ClassId = student.ClassId
-                }
+                Data = data
             };
         }
     }

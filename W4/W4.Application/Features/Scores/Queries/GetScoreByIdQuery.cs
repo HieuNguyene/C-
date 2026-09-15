@@ -5,6 +5,8 @@ using W4.Application.Interfaces;
 using W4.Domain.Entities;
 using W4.Application.DTOs.Responses;
 
+using AutoMapper;
+
 namespace W4.Application.Features.Scores.Queries
 {
     public class GetScoreByIdQuery : IRequest<ApiResponse<ScoreResponse>>
@@ -12,15 +14,13 @@ namespace W4.Application.Features.Scores.Queries
         public Guid Id { get; set; }
         public GetScoreByIdQuery(Guid id) => Id = id;
     }
-    public class GetScoreByIdQueryHandler : IRequestHandler<GetScoreByIdQuery, ApiResponse<ScoreResponse>>
+    public class GetScoreByIdQueryHandler(IScoreRepository repo, IMapper mapper) : IRequestHandler<GetScoreByIdQuery, ApiResponse<ScoreResponse>>
     {
-        private readonly IScoreRepository _repo;
-        public GetScoreByIdQueryHandler(IScoreRepository repo) => _repo = repo;
         public async Task<ApiResponse<ScoreResponse>> Handle(GetScoreByIdQuery request, CancellationToken token)
         {
-            var result = await _repo.GetByIdAsync(request.Id);
+            var result = await repo.GetByIdAsync(request.Id);
             if (result == null) return new ApiResponse<ScoreResponse> { Success = false, Message = "Not found" };
-            var response = new ScoreResponse { Id = result.Id, Value = result.Value, StudentId = result.StudentId, SubjectId = result.SubjectId };
+            var response = mapper.Map<ScoreResponse>(result);
             return new ApiResponse<ScoreResponse> { Success = true, Data = response };
         }
     }

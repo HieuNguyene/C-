@@ -1,3 +1,4 @@
+using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using W4.Application.DTOs;
@@ -15,11 +16,13 @@ namespace W4.Application.Features.Students.Queries
     {
         private readonly ILogger<GetStudentByKeywordQueryHandler> _logger;
         private readonly IStudentRepository _repository;
+        private readonly IMapper _mapper;
 
-        public GetStudentByKeywordQueryHandler(ILogger<GetStudentByKeywordQueryHandler> logger, IStudentRepository repository)
+        public GetStudentByKeywordQueryHandler(ILogger<GetStudentByKeywordQueryHandler> logger, IStudentRepository repository,IMapper mapper)
         {
             _logger = logger;
             _repository = repository;
+            _mapper = mapper;
         }
         public async Task<ApiResponse<List<StudentResponse>>> Handle(GetStudentByKeyWordQuery request, CancellationToken cancellationToken)
         {
@@ -27,14 +30,7 @@ namespace W4.Application.Features.Students.Queries
 
             var query = await _repository.GetStudentByKeyWordAsync(request.Keyword, request.PageSize, request.Page);
 
-            var data = query.Select(s => new StudentResponse
-            {
-                Id = s.Id,
-                Name = s.Name,
-                Dob = s.DateOfBirth,
-                Gender = s.Gender,
-                ClassId = s.ClassId
-            }).ToList();
+            var data = _mapper.Map<List<StudentResponse>>(query);
             return new ApiResponse<List<StudentResponse>>()
             {
                 Success = true,

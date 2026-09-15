@@ -11,7 +11,7 @@ namespace W4.Application.Features.Students.Commands
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public DateTime Dob { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public GenderType Gender { get; set; }
 
         private string? _classId;
@@ -41,7 +41,7 @@ namespace W4.Application.Features.Students.Commands
                 throw new KeyNotFoundException("Sinh viên này không tồn tại");
             }
             student.ChangeName(request.Name);
-            student.ChangeDob(request.Dob);
+            student.ChangeDob(request.DateOfBirth);
             student.ChangeGender(request.Gender);
             if (request.ClassId != null)
             {

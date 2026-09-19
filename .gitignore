@@ -54,6 +54,12 @@ Desktop.ini
 
 # Logs
 *.log
+logs/
+
+# Portable Redis Server & Snapshots
+**/redis/
+*.rdb
+dump.rdb
 
 # ==============================================================================
 # KHÁC

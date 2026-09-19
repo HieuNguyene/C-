@@ -3,18 +3,36 @@ using W4.Application.DTOs;
 using W4.Application.Interfaces;
 using W4.Domain.Entities;
 using W4.Application.DTOs.Responses;
+using W4.Application.Common;
+using AutoMapper;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 
 namespace W4.Application.Features.Subjects.Queries
 {
     public class GetAllSubjectsQuery : IRequest<ApiResponse<List<SubjectResponse>>> { }
-    public class GetAllSubjectsQueryHandler : IRequestHandler<GetAllSubjectsQuery, ApiResponse<List<SubjectResponse>>>
+
+    public class GetAllSubjectsQueryHandler(
+        ISubjectRepository repo,
+        IMapper mapper,
+        IMemoryCache cache,
+        ILogger<GetAllSubjectsQueryHandler> logger) : IRequestHandler<GetAllSubjectsQuery, ApiResponse<List<SubjectResponse>>>
     {
-        private readonly ISubjectRepository _repo;
-        public GetAllSubjectsQueryHandler(ISubjectRepository repo) => _repo = repo;
         public async Task<ApiResponse<List<SubjectResponse>>> Handle(GetAllSubjectsQuery request, CancellationToken token)
         {
-            var result = await _repo.GetAllAsync();
-            var response = result.Select(x => new SubjectResponse { SubjectId = x.SubjectId, SubjectName = x.SubjectName }).ToList();
+            if (cache.TryGetValue(CacheKeys.SubjectsAll, out List<SubjectResponse>? cachedSubjects) && cachedSubjects != null)
+            {
+                logger.LogInformation("[CACHE HIT] Lấy danh sách môn học từ In-Memory Cache (Key: {CacheKey})", CacheKeys.SubjectsAll);
+                return new ApiResponse<List<SubjectResponse>> { Success = true, Data = cachedSubjects };
+            }
+
+            logger.LogInformation("[CACHE MISS] Chưa có cache cho Key '{CacheKey}'. Đang truy vấn từ Database...", CacheKeys.SubjectsAll);
+            var result = await repo.GetAllAsync();
+            var response = mapper.Map<List<SubjectResponse>>(result);
+
+            cache.Set(CacheKeys.SubjectsAll, response, CacheKeys.DefaultOptions);
+            logger.LogInformation("[CACHE SET] Đã lưu danh sách môn học vào In-Memory Cache (Key: {CacheKey})", CacheKeys.SubjectsAll);
+
             return new ApiResponse<List<SubjectResponse>> { Success = true, Data = response };
         }
     }

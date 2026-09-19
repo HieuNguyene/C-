@@ -36,7 +36,11 @@ namespace W4.API.Controllers
 
         [HttpDelete("{id}")]
         [Authorize(Policy = "AdminOnly")]
-        public async Task<IActionResult> Delete(string id) => Ok(await _mediator.Send(new DeleteClassCommand(id)));
+        public async Task<IActionResult> Delete(string id, [FromBody] DeleteClassCommand command)
+        {
+            command.ClassId = id;
+            return HandleResult(await _mediator.Send(command));
+        }
     }
 }
 

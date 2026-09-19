@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Options;
 
 namespace W4.API
 {
@@ -35,7 +36,7 @@ namespace W4.API
             var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
             builder.Services.AddAuthentication(options =>
             {
-                 // Báo cho Server: "Mặc định hãy tìm và kiểm tra thẻ JWT Bearer"
+                // Báo cho Server: "Mặc định hãy tìm và kiểm tra thẻ JWT Bearer"
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; // Khi có API đến tìm thẻ JWT 
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;// Nếu ko có hay hết hạn thì đẩy lỗi 401 
             })
@@ -53,7 +54,7 @@ namespace W4.API
                     ValidAudience = jwtSettings.Audience, // Kiểm tra xem có đúng người sử dụng không
 
                     // Kiểm tra hết hạn dùng: Quá 10p từ chối lập tức 
-                    ValidateLifetime =true,
+                    ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero  //Hết hạn đúng từng giây, không cho trễ   
                 };
             });
@@ -63,7 +64,7 @@ namespace W4.API
                     policy.RequireRole("Admin"));
 
                 options.AddPolicy("CanManageStudents", policy =>
-                    policy.RequireRole("Admin","Teacher"));
+                    policy.RequireRole("Admin", "Teacher"));
             });
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
@@ -109,6 +110,12 @@ namespace W4.API
             builder.Services.AddScoped<System.Data.IDbConnection>(sp =>
                 new Microsoft.Data.SqlClient.SqlConnection(builder.Configuration.GetConnectionString("DefaultConnection"))
             );
+            builder.Services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = builder.Configuration.GetConnectionString("Redis") ?? "localhost:6379";
+                options.InstanceName = "w4:";
+            });
+
             var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

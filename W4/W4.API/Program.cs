@@ -20,7 +20,8 @@ using System.Text;
 
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Options;
-
+using Serilog;
+using Serilog.Events;
 namespace W4.API
 {
     public class Program
@@ -28,6 +29,27 @@ namespace W4.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Host.UseSerilog((context,configuration) => configuration
+            // Mức độ log tối thiểu: ghi từ mức Information trở lên
+            .MinimumLevel.Information()
+            // Giảm bớt log rác từ nội bộ Microsoft (Chỉ từ Warning trở lên đối với Microsoft)
+            .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
+            .MinimumLevel.Override("Microsoft.Hosting.Lifetime", Serilog.Events.LogEventLevel.Information)
+            
+            .Enrich.FromLogContext() // Bắt buộc để nhận diện ngữ cảnh request
+            .Enrich.WithProperty("Application", "W4.API")
+            .Enrich.WithProperty("Environment",context.HostingEnvironment.EnvironmentName)
+            // Ghi log ra màn hình console
+            .WriteTo.Console()
+
+            // Ghi ra file tự động xoay tròn theo ngày (Rolling file)
+            .WriteTo.File(
+                path: "log/app-.txt",
+                rollingInterval: RollingInterval.Day, // Mỗi ngày từ động tạo 1 file mới
+                retainedFileCountLimit: 30, // Tự động giữ file lại 30 ngày gần nhất
+                outputTemplate: "{Timestamp: yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] [{Application}] [{Environment}] {Message:lj}{NewLine}{Exception}"
+                        )
+            );
 
             // Add services to the container.
             builder.Services.AddControllers();
@@ -124,12 +146,11 @@ namespace W4.API
                 app.UseSwaggerUI();
             }
 
-
-
             app.UseMiddleware<ExceptionMiddleware>();
-            app.UseMiddleware<LoggingMiddleware>();
+            // app.UseMiddleware<LoggingMiddleware>();
 
             app.UseHttpsRedirection();
+            app.UseSerilogRequestLogging();
             app.UseAuthentication();
             app.UseAuthorization();
 

@@ -47,7 +47,7 @@ namespace W4.API
                 path: "log/app-.txt",
                 rollingInterval: RollingInterval.Day, // Mỗi ngày từ động tạo 1 file mới
                 retainedFileCountLimit: 30, // Tự động giữ file lại 30 ngày gần nhất
-                outputTemplate: "{Timestamp: yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] [{Application}] [{Environment}] {Message:lj}{NewLine}{Exception}"
+                outputTemplate: "{Timestamp: yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] [{Application}] [{Environment}] [{CorrelationId}] {Message:lj}{NewLine}{Exception}"
                         )
             );
 
@@ -145,7 +145,7 @@ namespace W4.API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseMiddleware<CorrelationIdMiddleware>();
             app.UseMiddleware<ExceptionMiddleware>();
             // app.UseMiddleware<LoggingMiddleware>();
 

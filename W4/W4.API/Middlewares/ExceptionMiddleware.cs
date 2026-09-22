@@ -3,6 +3,7 @@ using W4.Application.Validations;
 using W4.Application.Interfaces;
 using System.Text.Json;
 using FluentValidation;
+using StackExchange.Redis;
 
 namespace W4.API.Middlewares
 {
@@ -24,12 +25,16 @@ namespace W4.API.Middlewares
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Có lỗi xảy ra trong quá trình xử lý Request");
+                var correlationId = context.Items["CorrelationId"]?.ToString();
+                var traceId = !string.IsNullOrWhiteSpace(correlationId)
+                ? correlationId : context.TraceIdentifier;
+                _logger.LogError(ex, "Có lỗi xảy ra trong quá trình xử lý Request. TraceId: {TraceId}", traceId);
                 context.Response.ContentType = "application/json";
                 var response = new ApiResponse<object>
                 {
                     Success = false,
-                    Data = null
+                    Data = null,
+                    TraceId = traceId
                 };
 
                 switch (ex)

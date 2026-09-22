@@ -134,7 +134,12 @@ namespace W4.API
             );
             builder.Services.AddStackExchangeRedisCache(options =>
             {
-                options.Configuration = builder.Configuration.GetConnectionString("Redis") ?? "localhost:6379";
+                var connectionString = builder.Configuration.GetConnectionString("Redis") ?? "localhost:6379";
+                var redisOptions = StackExchange.Redis.ConfigurationOptions.Parse(connectionString);
+                redisOptions.ConnectTimeout = 1000; // Chỉ chờ kết nối tối đa 1 giây
+                redisOptions.SyncTimeout = 1000;
+                redisOptions.AbortOnConnectFail = false; // Không làm ứng dụng bị crash khi khởi động nếu Redis chưa bật
+                options.ConfigurationOptions = redisOptions;
                 options.InstanceName = "w4:";
             });
 
@@ -161,13 +166,3 @@ namespace W4.API
         }
     }
 }
-
-
-
-
-
-
-
-
-
-

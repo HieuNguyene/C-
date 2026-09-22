@@ -14,6 +14,9 @@ Một dự án **ASP.NET Core 8 Web API** chuyên sâu dành cho hệ thống qu
 - **Object Mapping:** AutoMapper
 - **Validation:** FluentValidation (Tự động validate Model)
 - **Xác thực & Bảo mật:** JWT Bearer, PBKDF2 Password Hashing, Refresh Token
+- **Caching:** In-Memory Cache (`Microsoft.Extensions.Caching.Memory`) & Distributed Redis Cache (`StackExchange.Redis`, `Microsoft.Extensions.Caching.StackExchangeRedis`)
+- **Logging:** Serilog (`Serilog.AspNetCore`, `Serilog.Sinks.Console`, `Serilog.Sinks.File`)
+- **Tracing:** Correlation ID Middleware (`X-Correlation-Id`) tích hợp `Serilog.Context.LogContext`
 - **Tài liệu API:** Swagger UI (Tích hợp nút ổ khóa Bearer Authorization)
 
 ---
@@ -57,12 +60,13 @@ Một dự án **ASP.NET Core 8 Web API** chuyên sâu dành cho hệ thống qu
 
 ## ⚙️ Cấu hình Hệ thống (`appsettings.json`)
 
-Mở file `W4.API/appsettings.json` và cấu hình chuỗi kết nối và thông số JWT:
+Mở file `W4.API/appsettings.json` và cấu hình chuỗi kết nối Database, Redis và thông số JWT:
 
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=YOUR_SERVER_NAME;Database=StudentManagement;Trusted_Connection=True;MultipleActiveResultSets=true;Encrypt=False"
+    "DefaultConnection": "Server=YOUR_SERVER_NAME;Database=StudentManagement;Trusted_Connection=True;MultipleActiveResultSets=true;Encrypt=False",
+    "Redis": "localhost:6379"
   },
   "Jwt": {
     "Key": "ChuoiKhoaBiMatToiThieu256BitRatDaiDungDeKyChuKyDienTuHMACSHA256",
@@ -73,7 +77,17 @@ Mở file `W4.API/appsettings.json` và cấu hình chuỗi kết nối và thô
 }
 ```
 
-### Các bước khởi tạo Database:
+### 🗄️ Khởi động Redis Cache (Bản Portable có sẵn):
+Dự án đã tích hợp sẵn Redis Server portable trong thư mục `redis/`:
+1. Mở Terminal và di chuyển vào thư mục `redis`:
+   ```bash
+   cd redis
+   .\redis-server.exe
+   ```
+2. Redis sẽ khởi chạy tại cổng mặc định `localhost:6379`.
+*(Lưu ý: Thư mục `redis/` và file dữ liệu `dump.rdb` đã được cấu hình `.gitignore` để tránh commit dữ liệu rác lên Git).*
+
+### 🛠️ Các bước khởi tạo Database:
 1. Mở Terminal tại thư mục `W4.API`:
    ```bash
    dotnet ef database update --project ../W4.Infrastructure --startup-project .
@@ -236,6 +250,77 @@ Toàn bộ hệ thống được phân quyền nghiêm ngặt dựa trên **Role
   ```
 - **`PUT /api/score/{id}`**: Sửa điểm đã chấm *(Admin hoặc Teacher)*.
 - **`DELETE /api/score/{id}`**: Xóa điểm *(Chỉ Admin)*.
+
+---
+
+## ⚡ Hệ thống Caching 2 Tầng (In-Memory & Distributed Redis Cache)
+
+Dự án áp dụng chiến lược Caching hiện đại nhằm tối ưu hóa tốc độ phản hồi và giảm tải áp lực truy vấn cho Database:
+
+### 1. In-Memory Cache (`IMemoryCache`) - Áp dụng cho Danh mục Môn học (`/api/subject`)
+- **Đặc tính:** Dữ liệu môn học có tần suất đọc lớn nhưng ít biến động.
+- **Vị trí lưu trữ:** Trực tiếp trong bộ nhớ RAM của tiến trình Web API.
+- **Chính sách hết hạn (TTL):**
+  - `AbsoluteExpirationRelativeToNow`: 5 phút (hết hạn cứng).
+  - `SlidingExpiration`: 2 phút (tự động gia hạn thêm nếu có truy vấn liên tục).
+- **Cơ chế Eviction:** Khi thực hiện Thêm/Sửa/Xóa môn học (`CreateSubjectCommand`, `UpdateSubjectCommand`, `DeleteSubjectCommand`), hệ thống tự động xóa cache `CacheKeys.SubjectAll` để đảm bảo dữ liệu mới nhất được cập nhật.
+
+### 2. Distributed Cache (`IDistributedCache` + Redis) - Áp dụng cho Lớp học (`/api/class`)
+- **Đặc tính:** Lưu trữ tập trung trên Redis Server (cổng `6379`), cho phép chia sẻ cache giữa nhiều instance API khi mở rộng (Scaling).
+- **Key Naming Convention:**
+  - Danh sách toàn bộ lớp học: `w4:classes:all`
+  - Chi tiết lớp theo ID: `w4:classes:{id}`
+- **Extension thông minh:** [`DistributedCacheExtensions.cs`](file:///c:/NGUYENMINHHIEU/Workspace/C%23/CS/W4/W4.Application/Common/DistributedCacheExtensions.cs) hỗ trợ các phương thức generic `GetRecordAsync<T>`, `SetRecordAsync<T>`, `RemoveRecordAsync` tự động serialize/deserialize JSON.
+- **Cache Resiliency & Graceful Degradation (Khả năng chịu lỗi cao cấp):**
+  - Cấu hình Timeout kết nối tối đa 1 giây (`ConnectTimeout = 1000ms`, `AbortOnConnectFail = false`).
+  - Tự động bọc phòng vệ `try-catch`: Nếu server Redis bị tắt hoặc mất mạng, hệ thống **không bao giờ bị lỗi 500**, mà tự động bỏ qua cache và **fallback truy vấn thẳng xuống Database** chỉ trong 1 giây, bảo vệ tối đa trải nghiệm của người dùng.
+
+---
+
+## 📝 Hệ thống Logging chuyên nghiệp với Serilog
+
+Hệ thống thay thế hoàn toàn logging mặc định của .NET bằng **Serilog** chuẩn Enterprise:
+
+### 1. Ghi log đa kênh (Sinks)
+- **Console Sink:** Định dạng ngắn gọn, màu sắc trực quan phục vụ debug trực tiếp trên terminal.
+- **Daily Rolling File Sink:**
+  - Tự động tạo file log mới mỗi ngày tại thư mục `log/app-YYYYMMDD.txt`.
+  - Giữ lại lịch sử trong 30 ngày gần nhất (`retainedFileCountLimit: 30`), các file cũ hơn tự động được xóa để tiết kiệm dung lượng ổ cứng.
+
+### 2. Request Logging Tinh gọn (`app.UseSerilogRequestLogging()`)
+- Gom toàn bộ thông tin vòng đời của HTTP Request thành **1 dòng duy nhất**:
+  ```text
+  [INF] [W4.API] [Development] [af03dba7-...] HTTP GET /api/class responded 200 in 35.4 ms
+  ```
+- Tự động lọc bỏ các log rác nội bộ của Microsoft và các request chuyển hướng HTTP 307.
+
+### 3. Log Enrichers & Metadata
+Mọi dòng log đều được tự động đóng dấu các siêu dữ liệu quan trọng:
+- `[Application]`: Tên ứng dụng (`W4.API`).
+- `[Environment]`: Môi trường triển khai (`Development`, `Production`).
+- `[CorrelationId]`: Mã định danh truy vết của riêng từng Request.
+
+---
+
+## 🔍 Cơ chế Truy vết Lỗi (Correlation ID & Error Tracing)
+
+Hỗ trợ đội ngũ vận hành và lập trình viên truy vết và chẩn đoán sự cố trong vài giây:
+
+1. **`CorrelationIdMiddleware`:**
+   - Đứng ở vị trí đầu tiên trong HTTP Pipeline.
+   - Kiểm tra Header `X-Correlation-Id` từ Client gửi lên (nếu có thì tái sử dụng, nếu không có thì tự sinh chuỗi `Guid` duy nhất).
+   - Đẩy mã này vào `LogContext` của Serilog xuyên suốt luồng xử lý và đính kèm lại vào Response Header `X-Correlation-Id`.
+2. **Chuẩn hóa Error Response (`ApiResponse<T>`):**
+   - Khi có sự cố (400, 404, 500), `ExceptionMiddleware` tự động trích xuất mã truy vết và trả về trường `TraceId` trong JSON:
+     ```json
+     {
+       "success": false,
+       "message": "Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau.",
+       "data": null,
+       "traceId": "af03dba7-0c8b-454a-b7d4-3d878d297765"
+     }
+     ```
+   - Khách hàng chỉ cần cung cấp mã `TraceId`, lập trình viên mở file log tìm kiếm là xác định được ngay toàn bộ stack trace và ngữ cảnh lỗi!
 
 ---
 

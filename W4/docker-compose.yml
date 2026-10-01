@@ -1,0 +1,61 @@
+services:
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: w4-sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=YourStrong@Passw0rd
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+    networks:
+      - w4-network
+
+  # -------------------------------------------------------------
+  # DỊCH VỤ 2: Redis Cache (Bản Alpine siêu nhẹ)
+  # -------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: w4-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - w4-network
+
+  # -------------------------------------------------------------
+  # DỊCH VỤ 3: Web API của chúng ta
+  # -------------------------------------------------------------
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: w4-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      # Chú ý: Server trỏ tới tên container 'sqlserver' thay vì localhost
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=StudentManagement;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;
+      # Redis trỏ tới tên container 'redis'
+      - ConnectionStrings__Redis=redis:6379
+    ports:
+      - "5000:8080"
+    depends_on:
+      - sqlserver
+      - redis
+    networks:
+      - w4-network
+
+# -------------------------------------------------------------
+#  Cấu hình Network & Volumes
+# -------------------------------------------------------------
+networks:
+  w4-network:
+    driver: bridge # Mạng nội bộ để các container gọi nhau bằng Tên Dịch Vụ
+
+volumes:
+  sql_data:   # Giữ lại dữ liệu DB, không bị mất khi tắt container
+  redis_data: # Giữ lại dữ liệu cache của Redis

@@ -22,6 +22,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Options;
 using Serilog;
 using Serilog.Events;
+using System.Reflection;
 namespace W4.API
 {
     public class Program
@@ -91,6 +92,35 @@ namespace W4.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
             {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "W4 - Advanced Student Management API",
+                    Version = "v1",
+                    Description = "Hệ thống Web API quản lý học sinh và trường học (Clean Architecture, CQRS MediatR, Redis, JWT, Serilog).",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Ban Quản Trị Hệ Thống",
+                        Email = "admin@schoolmanagement.vn"
+                    }
+                });
+
+                options.EnableAnnotations();
+
+                // 1. Nạp file XML tài liệu từ W4.API
+                var apiXmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var apiXmlPath = Path.Combine(AppContext.BaseDirectory, apiXmlFile);
+                if (File.Exists(apiXmlPath))
+                {
+                    options.IncludeXmlComments(apiXmlPath, includeControllerXmlComments: true);
+                }
+
+                // 2. Nạp file XML tài liệu từ W4.Application (DTOs, Commands, Queries)
+                var appXmlPath = Path.Combine(AppContext.BaseDirectory, "W4.Application.xml");
+                if (File.Exists(appXmlPath))
+                {
+                    options.IncludeXmlComments(appXmlPath);
+                }
+
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
@@ -98,7 +128,7 @@ namespace W4.API
                     Scheme = "Bearer",
                     BearerFormat = "JWT",
                     In = ParameterLocation.Header,
-                    Description = "Nhập Access Token của bạn vào đây (Swagger sẽ tự thêm tiền tố Bearer)"
+                    Description = "Nhập mã Access Token (JWT) vào đây.\nLưu ý: Không cần nhập chữ 'Bearer', Swagger sẽ tự động thêm."
                 });
 
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement

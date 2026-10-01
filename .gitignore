@@ -54,7 +54,8 @@ Desktop.ini
 
 # Logs
 *.log
-logs/
+**/logs/
+**/log/
 
 # Portable Redis Server & Snapshots
 **/redis/

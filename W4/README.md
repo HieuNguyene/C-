@@ -58,9 +58,26 @@ Một dự án **ASP.NET Core 8 Web API** chuyên sâu dành cho hệ thống qu
 
 ---
 
-## ⚙️ Cấu hình Hệ thống (`appsettings.json`)
+## ⚙️ Cấu hình Hệ thống & Khởi chạy
 
-Mở file `W4.API/appsettings.json` và cấu hình chuỗi kết nối Database, Redis và thông số JWT:
+### 🐳 Cách 1: Khởi chạy nhanh toàn bộ hệ thống bằng Docker Compose (Khuyên dùng)
+Hệ thống đã được đóng gói sẵn thành cụm 3 container: **SQL Server 2022**, **Redis 7** và **ASP.NET Core 8 Web API**.
+
+1. Mở Docker Desktop trên máy tính.
+2. Mở Terminal tại thư mục `W4` và chạy lệnh:
+   ```bash
+   docker-compose up -d --build
+   ```
+3. Truy cập Swagger UI ngay tại: **`http://localhost:5000/swagger`**.
+
+---
+
+### 💻 Cách 2: Khởi chạy thủ công trên môi trường Local
+
+#### ⚠️ Bước 1: Chuẩn bị cấu hình `appsettings.json`
+Vì lý do bảo mật, file cấu hình chính thức đã được đưa vào `.gitignore`. Bạn hãy:
+1. Tạo bản sao từ file mẫu: copy `W4.API/appsettings.Example.json` thành `W4.API/appsettings.json`.
+2. Cấu hình chuỗi kết nối Database, Redis và thông số JWT:
 
 ```json
 {
@@ -77,26 +94,24 @@ Mở file `W4.API/appsettings.json` và cấu hình chuỗi kết nối Database
 }
 ```
 
-### 🗄️ Khởi động Redis Cache (Bản Portable có sẵn):
-Dự án đã tích hợp sẵn Redis Server portable trong thư mục `redis/`:
-1. Mở Terminal và di chuyển vào thư mục `redis`:
-   ```bash
-   cd redis
-   .\redis-server.exe
-   ```
-2. Redis sẽ khởi chạy tại cổng mặc định `localhost:6379`.
-*(Lưu ý: Thư mục `redis/` và file dữ liệu `dump.rdb` đã được cấu hình `.gitignore` để tránh commit dữ liệu rác lên Git).*
+#### 🗄️ Bước 2: Khởi động Redis Cache:
+- **Cách dùng Docker (nhanh nhất):**
+  ```bash
+  docker run -d -p 6379:6379 --name redis redis:alpine
+  ```
+- **Hoặc dùng Redis Server portable:** Tải Redis đặt vào thư mục `redis/` và chạy `.\redis-server.exe`.
 
-### 🛠️ Các bước khởi tạo Database:
+#### 🛠️ Bước 3: Khởi tạo Database & Dữ liệu mẫu:
 1. Mở Terminal tại thư mục `W4.API`:
    ```bash
    dotnet ef database update --project ../W4.Infrastructure --startup-project .
    ```
-2. Khởi chạy ứng dụng:
+2. *(Tùy chọn)* Chạy file script [`seed.sql`](seed.sql) vào database `StudentManagement` trong SQL Server để nạp sẵn dữ liệu test (Lớp, Môn học, Sinh viên, Điểm).
+3. Khởi chạy ứng dụng:
    ```bash
    dotnet run --project W4.API
    ```
-3. Truy cập Swagger UI: **`https://localhost:62182/swagger`** *(hoặc `http://localhost:62183/swagger`)*.
+4. Truy cập Swagger UI: **`https://localhost:62182/swagger`** *(hoặc `http://localhost:62183/swagger`)*.
 
 ---
 

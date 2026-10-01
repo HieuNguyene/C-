@@ -1,0 +1,11 @@
+**/.git
+**/.vs
+**/.vscode
+**/bin
+**/obj
+**/log
+**/redis
+**/Screenshot
+*.user
+*.suo
+dump.rdb
